@@ -11,9 +11,8 @@ def main():
     dictionary = loadWordsFromFile("data-files/dictionary.txt")
     aliceWords = loadWordsFromFile("data-files/AliceInWonderLand.txt")
 
-    # Print first 50 values of each list to verify contents
-    print(dictionary[0:50])
-    print(aliceWords[0:50])
+    
+
 # end main()
 
 
@@ -31,5 +30,3 @@ def loadWordsFromFile(fileName):
 # Call main() to begin program
 main()
 
-
-print("hello world")
