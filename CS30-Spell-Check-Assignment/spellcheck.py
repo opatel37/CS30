@@ -31,3 +31,5 @@ def loadWordsFromFile(fileName):
 # Call main() to begin program
 main()
 
+
+print("hello world")
