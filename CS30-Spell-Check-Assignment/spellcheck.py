@@ -5,7 +5,9 @@
 
 import re
 from tkinter.tix import InputOnly  # Needed for splitting text with a regular expression
+import time
 import functions
+
 # Global Variable(s)
 
 def main():
@@ -35,22 +37,63 @@ def main():
         # Process Input
         match num_select:
             case "1":
-                word_select = input("Input a desired word: ").lower()
+                # Local Variable(s)
+                word_select_linear = input("Input a desired word: ").lower()
                 
-                # Start Linear Search
-                print("Linear Search starting...")
-                print(functions.linearSearch(dictionary, word_select))
+                # Start timer
+                start_linear_dict = time.time()
+                word_search_linear = functions.linearSearch(dictionary, word_select_linear)
+                
+                # Check if word is in dictionary
+                if word_search_linear == -1:
+                    print(str(word_select_linear) + "was not found" )
+                else:
+                    # Stop timer
+                    stop_linear_dict = time.time()
+
+                    # Print output
+                    print("Linear Search starting...")
+                    print(f"{word_select_linear} was found at index: {word_search_linear}\ntime taken to find word: {stop_linear_dict - start_linear_dict}")
+
             case "2":
-                word_select = input("Input a desired word: ")
-                print("2")
+                word_select_binary = input("Input a desired word: ")
+
+                # Start timer
+                start_binary_dict = time.time()
+                word_search_binary = functions.binarySearch(dictionary, word_select_binary)
+
+                # Check if word is in dictionary
+                if word_search_binary == -1:
+                    print(str(word_select_binary) + "was not found")
+
+                else:
+                    # Stop timer
+                    stop_binary_dict = time.time()
+
+                    # Print output
+                    print("Binary Seach starting...")
+                    print(f"{word_select_binary} was found at index: {word_search_binary}\ntime taken to find word: {stop_binary_dict - start_binary_dict}")
+
             case "3":
-                print("3")
+                counter = 0
+                
+                for i in aliceWords:
+                    output = functions.linearSearch(dictionary, i)
+                    if output == -1: 
+                        
+                    else: 
+                        counter = counter + 1
+                
+                print(counter)
+                
+
             case "4":
                 print("4")
             case "5":
                 print("Program Terminated")
                 loop = False
-
+            case other: 
+                print("Invalid Entry") 
 
 # end main()
 
