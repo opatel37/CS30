@@ -80,8 +80,6 @@ def main():
                 for i in aliceWords:
                     output = functions.linearSearch(dictionary, i)
                     if output == -1: 
-                        
-                    else: 
                         counter = counter + 1
                 
                 print(counter)
