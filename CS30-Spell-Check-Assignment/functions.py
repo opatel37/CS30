@@ -27,3 +27,19 @@ def binarySearch(anArray, item):
 
     # If item is not found
     return -1
+
+def check_and_output(select_type, search_type, time_start, time_stop):
+        # Check if word is in dictionary
+    if search_type == -1:
+        print(str(select_type) + "was not found" )
+    else:
+        # Print output
+        print(
+            f'''
+Linear Search starting...
+{select_type} was found at index: {search_type}
+\nTime taken to find word: {time_stop - time_start}
+            '''
+        )
+
+def print_alice_out(word_counter, time_start, time_stop): 

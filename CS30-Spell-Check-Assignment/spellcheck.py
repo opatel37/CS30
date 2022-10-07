@@ -3,8 +3,7 @@
 # 1: dictionary: a list containing all of the words from "dictionary.txt"
 # 2: aliceWords: a list containing all of the words from "AliceInWonderland.txt"
 
-import re
-from tkinter.tix import InputOnly  # Needed for splitting text with a regular expression
+import re # Needed for splitting text with a regular expression
 import time
 import functions
 
@@ -42,67 +41,79 @@ def main():
                 
                 # Start timer
                 start_linear_dict = time.time()
+
+                # Do Search
                 word_search_linear = functions.linearSearch(dictionary, word_select_linear)
                 
+                # Stop timer
+                stop_linear_dict = time.time()
+
                 # Check if word is in dictionary
-                if word_search_linear == -1:
-                    print(str(word_select_linear) + "was not found" )
-                else:
-                    # Stop timer
-                    stop_linear_dict = time.time()
+                functions.check_and_output(word_select_linear, word_search_linear, start_linear_dict, stop_linear_dict)
 
-                    # Print output
-                    print(
-                        f'''
-                        Linear Search starting...
-                        {word_select_linear} was found at index: {word_search_linear}\nTime taken to find word: {stop_linear_dict - start_linear_dict}
-
-                        '''
-                    )
             case "2":
                 word_select_binary = input("Input a desired word: ")
 
                 # Start timer
                 start_binary_dict = time.time()
+                
+                # Do Search
                 word_search_binary = functions.binarySearch(dictionary, word_select_binary)
 
+                # Stop timer
+                stop_binary_dict = time.time()
+
                 # Check if word is in dictionary
-                if word_search_binary == -1:
-                    print(str(word_select_binary) + "was not found")
-
-                else:
-                    # Stop timer
-                    stop_binary_dict = time.time()
-
-                    # Print output
-                    print(
-                        f'''
-                        Binary Seach starting...
-                        {word_select_binary} was found at index: {word_search_binary} \nTime taken to find word: {stop_binary_dict - start_binary_dict}
-                        '''
-                    )
+                functions.check_and_output(word_select_binary, word_search_binary, start_binary_dict, stop_binary_dict)
 
             case "3":
-                counter = 0
+                counter_linear = 0
 
                 print("Linear Search Starting...")   
 
+                # Start timer
                 start_linear_alice = time.time()
+                
+                # Do Search
                 for i in aliceWords:
                     output = functions.linearSearch(dictionary, i.lower())
                     if output == -1: 
-                        counter = counter + 1
+                        counter_linear = counter_linear + 1
+                
+                # Stop timer
                 stop_linear_alice = time.time()
 
                 print(
                     f'''
-                    Number of words not found in dictionary: {counter}
-                    \nTime taken to complete search: {stop_linear_alice - start_linear_alice}
+Number of words not found in dictionary: {counter_linear}
+\nTime taken to complete search: {stop_linear_alice - start_linear_alice}
                     '''
                 )
 
             case "4":
-                print("4")
+                counter_binary = 0
+
+                print("Binary Search Starting...")
+
+                # Start timer
+                start_binary_alice = time.time()
+                
+                # Do Search
+                for i in aliceWords:
+                    output = functions.binarySearch(dictionary, i.lower())
+                    if output == -1:
+                        counter_binary = counter_binary + 1
+                
+                # Stop timer
+                stop_binary_alice = time.time()
+
+                print(
+                    f'''
+Number of words not found in dictionary: {counter_binary}
+\nTime taken to complete search: {stop_binary_alice - start_binary_alice}
+                    '''
+                )
+
             case "5":
                 print("Program Terminated")
                 loop = False
