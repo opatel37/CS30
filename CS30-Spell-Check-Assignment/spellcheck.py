@@ -23,11 +23,11 @@ def main():
         print("\nMain Menu")
         print(
             '''
-            1: Spell Check a Word (Linear Search)
-            2: Spell Check a Word (Binary Search)
-            3: Spell Check Alice In Wonderland (Linear Search)
-            4: Spell Check Alice In Wonderland (Binary Search)
-            5: Exit
+1: Spell Check a Word (Linear Search)
+2: Spell Check a Word (Binary Search)
+3: Spell Check Alice In Wonderland (Linear Search)
+4: Spell Check Alice In Wonderland (Binary Search)
+5: Exit
             '''
     )
 
@@ -52,9 +52,13 @@ def main():
                     stop_linear_dict = time.time()
 
                     # Print output
-                    print("Linear Search starting...")
-                    print(f"{word_select_linear} was found at index: {word_search_linear}\ntime taken to find word: {stop_linear_dict - start_linear_dict}")
+                    print(
+                        f'''
+                        Linear Search starting...
+                        {word_select_linear} was found at index: {word_search_linear}\nTime taken to find word: {stop_linear_dict - start_linear_dict}
 
+                        '''
+                    )
             case "2":
                 word_select_binary = input("Input a desired word: ")
 
@@ -71,19 +75,31 @@ def main():
                     stop_binary_dict = time.time()
 
                     # Print output
-                    print("Binary Seach starting...")
-                    print(f"{word_select_binary} was found at index: {word_search_binary}\ntime taken to find word: {stop_binary_dict - start_binary_dict}")
+                    print(
+                        f'''
+                        Binary Seach starting...
+                        {word_select_binary} was found at index: {word_search_binary} \nTime taken to find word: {stop_binary_dict - start_binary_dict}
+                        '''
+                    )
 
             case "3":
                 counter = 0
-                
+
+                print("Linear Search Starting...")   
+
+                start_linear_alice = time.time()
                 for i in aliceWords:
-                    output = functions.linearSearch(dictionary, i)
+                    output = functions.linearSearch(dictionary, i.lower())
                     if output == -1: 
                         counter = counter + 1
-                
-                print(counter)
-                
+                stop_linear_alice = time.time()
+
+                print(
+                    f'''
+                    Number of words not found in dictionary: {counter}
+                    \nTime taken to complete search: {stop_linear_alice - start_linear_alice}
+                    '''
+                )
 
             case "4":
                 print("4")
