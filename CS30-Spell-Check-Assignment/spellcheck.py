@@ -31,7 +31,7 @@ def main():
     )
 
         # Option Input
-        num_select = input("Input number of desired option (1-S): ")
+        num_select = input("Input number of desired option (1-5): ")
 
         # Process Input
         match num_select:
@@ -83,12 +83,8 @@ def main():
                 # Stop timer
                 stop_linear_alice = time.time()
 
-                print(
-                    f'''
-Number of words not found in dictionary: {counter_linear}
-\nTime taken to complete search: {stop_linear_alice - start_linear_alice}
-                    '''
-                )
+                # Print out results
+                functions.print_alice_out(counter_linear, start_linear_alice, stop_linear_alice)
 
             case "4":
                 counter_binary = 0
@@ -107,16 +103,13 @@ Number of words not found in dictionary: {counter_linear}
                 # Stop timer
                 stop_binary_alice = time.time()
 
-                print(
-                    f'''
-Number of words not found in dictionary: {counter_binary}
-\nTime taken to complete search: {stop_binary_alice - start_binary_alice}
-                    '''
-                )
+                # Print out results
+                functions.print_alice_out(counter_binary, start_binary_alice, stop_binary_alice)
 
             case "5":
                 print("Program Terminated")
                 loop = False
+
             case other: 
                 print("Invalid Entry") 
 

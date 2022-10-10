@@ -43,3 +43,9 @@ Linear Search starting...
         )
 
 def print_alice_out(word_counter, time_start, time_stop): 
+                    print(
+                    f'''
+Number of words not found in dictionary: {word_counter}
+\nTime taken to complete search: {time_stop - time_start}
+                    '''
+                )
