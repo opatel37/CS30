@@ -36,7 +36,6 @@ def main():
         # Process Input
         match num_select:
             case "1":
-                # Local Variable(s)
                 word_select_linear = input("Input a desired word: ").lower()
                 
                 # Start timer
