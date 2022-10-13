@@ -1,3 +1,5 @@
+import time
+
 # Function(s)
 def linearSearch(anArray, item):
     for i in anArray:
@@ -28,24 +30,52 @@ def binarySearch(anArray, item):
     # If item is not found
     return -1
 
-def check_and_output(select_type, search_type, time_start, time_stop):
-        # Check if word is in dictionary
-    if search_type == -1:
-        print(str(select_type) + "was not found" )
+def word_search(search_txt, algo_type):
+    # Get input
+    inputed_word = input("Input a desired word: ").lower()
+    
+    # Start timer
+    start_search = time.time()
+
+    # Do Search
+    word_search = algo_type(search_txt, inputed_word)
+    
+    # Stop timer
+    stop_search = time.time()
+
+    # Check if word is in dictionary
+    if word_search == -1:
+        print(str(inputed_word) + "was not found" )
     else:
-        # Print output
+        # Output results
         print(
             f'''
 Linear Search starting...
-{select_type} was found at index: {search_type}
-\nTime taken to find word: {time_stop - time_start}
+{inputed_word} was found at index: {word_search}
+\nTime taken to find word: {stop_search - start_search}
             '''
         )
 
-def print_alice_out(word_counter, time_start, time_stop): 
-                    print(
-                    f'''
+def alice_spell_check(search_txt, check_txt, algo_type):
+    # Init word counter
+    word_counter = 0
+
+    # Start timer
+    start_alice = time.time()
+    
+    # Do spell check
+    for i in search_txt:
+        output = algo_type(check_txt, i.lower())
+        if output == -1:
+            word_counter = word_counter + 1
+    
+    # Stop timer
+    stop_alice = time.time()
+
+    # Output results
+    print(
+    f'''
 Number of words not found in dictionary: {word_counter}
-\nTime taken to complete search: {time_stop - time_start}
-                    '''
-                )
+\nTime taken to complete search: {stop_alice - start_alice}
+    '''
+    )

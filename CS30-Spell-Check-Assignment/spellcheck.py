@@ -36,74 +36,20 @@ def main():
         # Process Input
         match num_select:
             case "1":
-                word_select_linear = input("Input a desired word: ").lower()
-                
-                # Start timer
-                start_linear_dict = time.time()
-
-                # Do Search
-                word_search_linear = functions.linearSearch(dictionary, word_select_linear)
-                
-                # Stop timer
-                stop_linear_dict = time.time()
-
-                # Check if word is in dictionary
-                functions.check_and_output(word_select_linear, word_search_linear, start_linear_dict, stop_linear_dict)
+                functions.word_search(dictionary, functions.linearSearch)
 
             case "2":
-                word_select_binary = input("Input a desired word: ")
-
-                # Start timer
-                start_binary_dict = time.time()
-                
-                # Do Search
-                word_search_binary = functions.binarySearch(dictionary, word_select_binary)
-
-                # Stop timer
-                stop_binary_dict = time.time()
-
-                # Check if word is in dictionary
-                functions.check_and_output(word_select_binary, word_search_binary, start_binary_dict, stop_binary_dict)
+                functions.word_search(dictionary, functions.binarySearch)
 
             case "3":
-                counter_linear = 0
-
                 print("Linear Search Starting...")   
 
-                # Start timer
-                start_linear_alice = time.time()
-                
-                # Do Search
-                for i in aliceWords:
-                    output = functions.linearSearch(dictionary, i.lower())
-                    if output == -1: 
-                        counter_linear = counter_linear + 1
-                
-                # Stop timer
-                stop_linear_alice = time.time()
-
-                # Print out results
-                functions.print_alice_out(counter_linear, start_linear_alice, stop_linear_alice)
+                functions.alice_spell_check(aliceWords, dictionary, functions.linearSearch)
 
             case "4":
-                counter_binary = 0
-
                 print("Binary Search Starting...")
 
-                # Start timer
-                start_binary_alice = time.time()
-                
-                # Do Search
-                for i in aliceWords:
-                    output = functions.binarySearch(dictionary, i.lower())
-                    if output == -1:
-                        counter_binary = counter_binary + 1
-                
-                # Stop timer
-                stop_binary_alice = time.time()
-
-                # Print out results
-                functions.print_alice_out(counter_binary, start_binary_alice, stop_binary_alice)
+                functions.alice_spell_check(aliceWords, dictionary, functions.binarySearch)
 
             case "5":
                 print("Program Terminated")
