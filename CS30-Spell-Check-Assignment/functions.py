@@ -67,7 +67,7 @@ def alice_spell_check(search_txt, check_txt, algo_type):
     for i in search_txt:
         output = algo_type(check_txt, i.lower())
         if output == -1:
-            word_counter = word_counter + 1
+            word_counter += 1
     
     # Stop timer
     stop_alice = time.time()
