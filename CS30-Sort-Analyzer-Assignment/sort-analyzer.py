@@ -1,8 +1,6 @@
 # SORT ANALYZER STARTER CODE
 
-import random
 import time
-from statistics import mean
 
 # RETURN DATA FROM FILE AS AN ARRAY OF INTERGERS
 def loadDataArray(fileName):
@@ -19,15 +17,17 @@ def loadDataArray(fileName):
     return temp
 
 def bubbleSort(anArray):
-    array_copy = anArray.copy()
+    # array_copy = anArray.copy()
 
-    for total_coms in range(len(array_copy) -1, 0, -1):
+    for total_coms in range(len(anArray) -1, 0, -1):
 
         for cur_coms in range(total_coms):
-            if array_copy[cur_coms] > array_copy[cur_coms +1]:
-                array_copy[cur_coms], array_copy[cur_coms +1] = array_copy[cur_coms +1], array_copy[cur_coms]
+            if anArray[cur_coms] > anArray[cur_coms +1]:
+                anArray[cur_coms], anArray[cur_coms +1] = anArray[cur_coms +1], anArray[cur_coms]
 
 def selectionSort(anArray):
+    # array_copy = anArray.copy()
+
     for fill_slot in range(0, len(anArray) -1):
         min_position = fill_slot
 
@@ -39,22 +39,24 @@ def selectionSort(anArray):
         anArray[min_position], anArray[fill_slot] = anArray[fill_slot], anArray[min_position]
 
 def insertionSort(anArray):
+    # array_copy = anArray.copy()
+
     for i in range(1, len(anArray) -1):
         ins_val = anArray[i]
         test_pos = i
 
         while test_pos > 0 and  anArray[test_pos -1] > ins_val:
-            anArray[test_pos] = anArray[test_pos -1]
+            anArray[test_pos +1] = anArray[test_pos -1]
             test_pos -= 1
         
         anArray[test_pos] = ins_val
-
 
 # LOAD DATA FILE INTO GLOBAL VARIABLES
 randomData = loadDataArray("data-files/random-values.txt")
 reversedData = loadDataArray("data-files/reversed-values.txt")
 nearlySortedData = loadDataArray("data-files/nearly-sorted-values.txt")
 fewUniqueData = loadDataArray("data-files/few-unique-values.txt")
+
 
 # EXAMPLE OF HOW TO TIME DURATION OF A SORT ALGORITHM
 # startTime = time.time()
@@ -68,29 +70,20 @@ def sort_function(algo_type, data_file):
     end_time = time.time()
     return end_time - start_time
 
-# ANALYZE SORT ALGORITHMS
-list = []
-
-def loop_sort(list, algo_type, data_file):
-    for i in range(5):
-        list.append(sort_function(algo_type, data_file))
-    
-    print(mean(list))
-
 print("Bubble Sort")
-print("Random Data Run: " + str(loop_sort(list, bubbleSort, randomData)))
-print("Revered Data Run: " + str(loop_sort(list, bubbleSort, reversedData)))
-print("Nearly Sorted Run: " + str(loop_sort(list, bubbleSort, nearlySortedData)))
-print("Few Unique Run: " + str(loop_sort(list, bubbleSort, randomData)))
+print("Random Data Run: " + str(sort_function(bubbleSort, randomData.copy())))
+print("Revered Data Run: " + str(sort_function(bubbleSort, reversedData.copy())))
+print("Nearly Sorted Run: " + str(sort_function(bubbleSort, nearlySortedData.copy())))
+print("Few Unique Run: " + str(sort_function(bubbleSort, fewUniqueData.copy())))
 
 print("Selection Sort")
-print("Random Data Run: " + str(loop_sort(list, selectionSort, randomData)))
-print("Revered Data Run: " + str(loop_sort(list, selectionSort, reversedData)))
-print("Nearly Sorted Run: " + str(loop_sort(list, selectionSort, nearlySortedData)))
-print("Few Unique Run: " + str(loop_sort(list, selectionSort, randomData)))
+print("Random Data Run: " + str(sort_function(selectionSort, randomData.copy())))
+print("Revered Data Run: " + str(sort_function(selectionSort, reversedData.copy())))
+print("Nearly Sorted Run: " + str(sort_function(selectionSort, nearlySortedData.copy())))
+print("Few Unique Run: " + str(sort_function(selectionSort, fewUniqueData.copy())))
 
 print("Insertion Sort")
-print("Random Data Run: " + str(loop_sort(list, insertionSort, randomData)))
-print("Revered Data Run: " + str(loop_sort(list, insertionSort, reversedData)))
-print("Nearly Sorted Run: " + str(loop_sort(list, insertionSort, nearlySortedData)))
-print("Few Unique Run: " + str(loop_sort(list, insertionSort, randomData)))
+print("Random Data Run: " + str(sort_function(insertionSort, randomData.copy())))
+print("Revered Data Run: " + str(sort_function(insertionSort, reversedData.copy())))
+print("Nearly Sorted Run: " + str(sort_function(insertionSort, nearlySortedData.copy())))
+print("Few Unique Run: " + str(sort_function(insertionSort, fewUniqueData.copy())))
