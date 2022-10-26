@@ -35,19 +35,3 @@ print(words)
 # 30 > 40 (terminates while loop)
 
 # anArray[test_pos -1] (100) = ins_val (what's been saved as 40)
-
-# def insertionSort(anArray):
-#     arrayCopy = anArray.copy()
-
-#     for i in range(1, len(arrayCopy)):
-#         valuecurrent = arrayCopy[i]
-#         positioncurrent = i -1
-
-#         while positioncurrent >= 0 and arrayCopy[positioncurrent] > valuecurrent:
-#             arrayCopy[positioncurrent +1] = arrayCopy[positioncurrent]
-#             positioncurrent -= 1 
-#         arrayCopy[positioncurrent +1] = valuecurrent
-
-
-# # i = 
-# # valcur = 
