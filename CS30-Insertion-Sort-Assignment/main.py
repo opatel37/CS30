@@ -2,11 +2,11 @@ nums = [10, 70, 30, 100, 40, 45, 90, 80, 85]
 words = ["dog","at", "good", "eye", "cat", "ball", "fish"]
 
 def insertionSort(anArray):
-    for i in range(1, len(anArray) -1):
+    for i in range(1, len(anArray)):
         ins_val = anArray[i]
         test_pos = i
 
-        while test_pos > 0 and  anArray[test_pos -1] > ins_val:
+        while test_pos > 0 and anArray[test_pos -1] > ins_val:
             anArray[test_pos] = anArray[test_pos -1]
             test_pos -= 1
         
@@ -36,3 +36,18 @@ print(words)
 
 # anArray[test_pos -1] (100) = ins_val (what's been saved as 40)
 
+# def insertionSort(anArray):
+#     arrayCopy = anArray.copy()
+
+#     for i in range(1, len(arrayCopy)):
+#         valuecurrent = arrayCopy[i]
+#         positioncurrent = i -1
+
+#         while positioncurrent >= 0 and arrayCopy[positioncurrent] > valuecurrent:
+#             arrayCopy[positioncurrent +1] = arrayCopy[positioncurrent]
+#             positioncurrent -= 1 
+#         arrayCopy[positioncurrent +1] = valuecurrent
+
+
+# # i = 
+# # valcur = 
