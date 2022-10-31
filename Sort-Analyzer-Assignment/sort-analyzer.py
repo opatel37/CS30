@@ -1,7 +1,6 @@
 # SORT ANALYZER STARTER CODE
 
 import time
-from statistics import mean
 
 # RETURN DATA FROM FILE AS AN ARRAY OF INTERGERS
 def loadDataArray(fileName):
