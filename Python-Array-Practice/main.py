@@ -53,4 +53,3 @@ while loop:
         print(num_10)
     else:
         num_10.append(in_10.capitalize())
-    
