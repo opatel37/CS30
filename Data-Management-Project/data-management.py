@@ -1,10 +1,13 @@
 # import functions
-import json
-import pandas
+
 # Data Management Project
 
 # Global Variable(s)
+data_file = open("trade-data-set.txt", "r")
 
+for line in data_file:
+    line = line.strip()
+    
 
 def main():
 
@@ -32,8 +35,7 @@ DATE MANAGEMENT MAIN MENU
 
         match selection:
             case "1":
-                test = pandas.read_excel(r"F:\CS30\Data-Management-Project\trade-data-set.csv")
-                print(test)
+                print("1")
             case "2":
                 print("2")
             case "3":
@@ -47,6 +49,3 @@ DATE MANAGEMENT MAIN MENU
             case "7":
                 loop = False
                 print ("Program Terminated")
-
-
-main()
