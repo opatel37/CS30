@@ -32,7 +32,7 @@ equal_or_above_18 = 0
 for i in range(0, len(ages)):
     if ages[i] < 18:
         below_18 += 1
-    elif ages[i] >= 18:
+    else:
         equal_or_above_18 += 1
 
 print(
@@ -57,7 +57,7 @@ for i in range(0, len(prices)):
         under_20 += 1
     elif prices[i] >= 20 and prices[i] <= 49:
         from_20_to_49 += 1
-    elif prices[i] >= 50:
+    else:
         equal_or_above_50 += 1
 
 print(
