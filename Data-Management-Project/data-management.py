@@ -1,13 +1,19 @@
-# import functions
+import csv
+
+# Direction,Year,Date,Weekday,Country,Commodity,Transport_Mode,Measure,Value,Cumulative
 
 # Data Management Project
 
 # Global Variable(s)
-data_file = open("trade-data-set.txt", "r")
-
-for line in data_file:
-    line = line.strip()
+data_file = open("trade-data-set.csv", "r")
     
+for line in data_file:
+    print(line)
+
+    # reader = csv.DictReader(data_file)
+    # for row in reader:
+    #     print(row['Direction'], row['Year'], row['Data'], row['Weekday'], row['Country'], row['Commodity'], row['Transport_Mode'], row['Measure'], row['Value'], row['Cumulative'])
+
 
 def main():
 
