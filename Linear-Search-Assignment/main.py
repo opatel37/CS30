@@ -4,9 +4,9 @@ unsorted = [30, 20, 70, 40, 50, 100, 90]
  
 
 def linearSearch(anArray, item):
-    for i in anArray:
-        if i == item:
-            return anArray.index(item)
+    for i in range(0, len(anArray)):
+        if anArray[i] == item:
+            return i
         
     return -1
 
