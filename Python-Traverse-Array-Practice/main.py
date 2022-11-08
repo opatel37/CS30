@@ -5,7 +5,7 @@ yes_counter = 0
 no_counter = 0
 maybe_counter = 0
 
-for i in range(0, len(results)): 
+for i in range(len(results)): 
     if results[i].capitalize() == "Yes":
         yes_counter += 1
     elif results[i].capitalize() == "No":
@@ -29,7 +29,7 @@ ages = [30, 2, 46, 6, 24, 19, 35, 12, 23, 56, 18, 3, 6, 7, 25]
 below_18 = 0
 equal_or_above_18 = 0
 
-for i in range(0, len(ages)):
+for i in range(len(ages)):
     if ages[i] < 18:
         below_18 += 1
     else:
@@ -52,7 +52,7 @@ under_20 = 0
 from_20_to_49 = 0
 equal_or_above_50 = 0
 
-for i in range(0, len(prices)):
+for i in range(len(prices)):
     if prices[i] < 20:
         under_20 += 1
     elif prices[i] >= 20 and prices[i] <= 49:
@@ -71,7 +71,7 @@ f'''
 # Part B
 prices_B = prices.copy()
 
-for i in range(0, len(prices_B)):
+for i in range(len(prices_B)):
     prices_B[i] += 2
 
 print(prices_B)
@@ -79,15 +79,15 @@ print(prices_B)
 # Part C
 prices_C = prices.copy()
 
-for i in range(0, len(prices_C)):
-    prices_C[i] += prices_C[i] * 0.05
+for i in range(len(prices_C)):
+    prices_C[i] *= 1.05
 
 print(prices_C)
 
 # Part D
 prices_D = prices.copy()
 
-for i in range(0, len(prices_D)):
-    prices_D[i] -= prices_D[i] * 0.2
+for i in range(len(prices_D)):
+    prices_D[i] *= 0.8
 
 print(prices_D)
