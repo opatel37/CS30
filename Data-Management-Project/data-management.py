@@ -6,14 +6,16 @@ import csv
 
 # Global Variable(s)
 data_file = open("trade-data-set.csv", "r")
-    
+data_list = []
+
 for line in data_file:
-    print(line)
+    data_list.append(line.strip().split(","))
 
     # reader = csv.DictReader(data_file)
     # for row in reader:
     #     print(row['Direction'], row['Year'], row['Data'], row['Weekday'], row['Country'], row['Commodity'], row['Transport_Mode'], row['Measure'], row['Value'], row['Cumulative'])
 
+print(data_list)
 
 def main():
 
