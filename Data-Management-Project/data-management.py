@@ -5,17 +5,42 @@ import csv
 # Data Management Project
 
 # Global Variable(s)
-data_file = open("trade-data-set.csv", "r")
 data_list = []
+data_file = open("trade-data-set.csv", "r+")
+
+def create_data_dict(data_set):
+    "Direction": data_set[0]
+    "Year": data_set[1]
+    "Data": data_set[2]
+    "Weekday": data_set[3]
+    
 
 for line in data_file:
     data_list.append(line.strip().split(","))
 
-    # reader = csv.DictReader(data_file)
-    # for row in reader:
-    #     print(row['Direction'], row['Year'], row['Data'], row['Weekday'], row['Country'], row['Commodity'], row['Transport_Mode'], row['Measure'], row['Value'], row['Cumulative'])
 
-print(data_list)
+
+print(data_list[0:10])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def main():
 
