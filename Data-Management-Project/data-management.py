@@ -1,30 +1,13 @@
 import csv
+import functions
+import json
 
 # Direction,Year,Date,Weekday,Country,Commodity,Transport_Mode,Measure,Value,Cumulative
 
 # Data Management Project
 
 # Global Variable(s)
-data_list = []
-data_file = open("trade-data-set.csv", "r+")
-
-def create_data_dict(data_set):
-    "Direction": data_set[0]
-    "Year": data_set[1]
-    "Data": data_set[2]
-    "Weekday": data_set[3]
-    
-
-for line in data_file:
-    data_list.append(line.strip().split(","))
-
-
-
-print(data_list[0:10])
-
-
-
-
+data_list = functions.read_file()
 
 
 
