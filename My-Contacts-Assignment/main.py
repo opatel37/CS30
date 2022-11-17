@@ -16,7 +16,7 @@ while loop:
 
         1. Display Contact Names
         2. Search for Contact
-        3. Edit Contact
+        3. Edit ContactMy-Contacts-Assignment/main.py
         4. New Contact
         5. Remove Contact
         6. Exit
