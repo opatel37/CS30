@@ -14,6 +14,7 @@ def main():
 
     # Local Variable(s)
     loop = True
+    line_num_1_archive = 0
 
     # Main Menu (while loop)
     while loop:
@@ -40,38 +41,93 @@ DATE MANAGEMENT MAIN MENU
                 # Track lines printed
                 line_num_1 = 0
 
-                # Print data
-                print(data_list[line_num_1:line_num_1 + 10])
+                # print(data_list[line_num_1:line_num_1 + 10])
+                for i in range(line_num_1, line_num_1 + 10):
+                    print("\n" + str(data_list[i]))
                 
                 # Set inner loop
-                inner_loop = True
+                inner_loop_1 = True
 
-                while inner_loop:
+                while inner_loop_1:
                     print(
 '''
 1. Display the next 10 items
-2. Exit to Main Menu                        
+2. Track back to last set of items displayed
+3. Return to Main Menu
 '''
                     )
 
                     # Get input for inner loop
-                    selection_1 = input("Input number of desired option (1-2): ")
+                    selection_1 = input("Input number of desired option (1-3): ")
 
                     # Process input
                     if selection_1 == "1":
                         # Add to line tracker
                         line_num_1 += 10
 
-                        print(data_list[line_num_1:line_num_1+10])
-                        
+                        # print(data_list[line_num_1:line_num_1 + 10])
+                        for i in range(line_num_1, line_num_1 + 10):
+                            print("\n" + str(data_list[i]))
+
                     elif selection_1 == "2":
-                        inner_loop = False
+                        line_num_1 = line_num_1_archive
+
+                        # print(data_list[line_num_1:line_num_1 + 10])
+                        for i in range(line_num_1, line_num_1 + 10):
+                            print("\n" + str(data_list[i]))
+
+                    elif selection_1 == "3":
+                        line_num_1_archive = line_num_1
+                        inner_loop_1 = False
 
                     else:
                         print("Invalid Entry")
 
             case "2":
-                print("2")
+                # Set inner loop 
+                inner_loop_2 = True
+
+                while inner_loop_2:
+                    print(
+'''
+Filter By: 
+1. Year
+2. Day of the Week
+3. Combined
+4. Return to Main Menu
+'''
+                    )
+
+                    selection_2 = input("Input number of desired option (1-4): ")
+
+                    if selection_2 == "1":
+                        year = input("Enter the year you would like to see data for: ")
+
+                        for item in data_list:
+                            if item["Year"] == year:
+                                print(str(item) + "\n")
+
+                    elif selection_2 == "2":
+                        day = input("Enter the day you would like to see data for: ")
+
+                        for item in data_list:
+                            if item["Weekday"] == day:
+                                print(str(item) + "\n")
+
+                    elif selection_2 == "3":
+                        year_comb = input("Enter the year you would like to see data for: ")
+                        day_comb = input("Enter the day you would like to see data for: ")
+                        
+                        for item in data_list:
+                            if item["Year"] == year_comb and item["Weekday"] == day_comb:
+                                print(str(item) + "\n")
+
+                    elif selection == "4":
+                        inner_loop_2 = False
+                    
+                    else: 
+                        print("Invalid Entry")
+            
             case "3":
                 print("3")
             case "4":
