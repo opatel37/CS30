@@ -52,7 +52,7 @@ DATE MANAGEMENT MAIN MENU
                     print(
 '''
 1. Display the next 10 items
-2. Track back to last set of items displayed
+2. Track back to last set of items displayed on previous visit
 3. Return to Main Menu
 '''
                     )
