@@ -92,6 +92,8 @@ DATE MANAGEMENT MAIN MENU
 '''
 Filter By: 
 1. Day of the Week
+2. Month
+3. Day & Month
 2. Return to Main Menu
 '''
                     )
