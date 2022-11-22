@@ -7,7 +7,7 @@ import json
 # Data Management Project
 
 # Global Variable(s)
-data_list = functions.read_file()
+data_list = functions.read_file('./trade-data-set.txt')
 
 # Run main function
 def main():
@@ -91,38 +91,21 @@ DATE MANAGEMENT MAIN MENU
                     print(
 '''
 Filter By: 
-1. Year
-2. Day of the Week
-3. Combined
-4. Return to Main Menu
+1. Day of the Week
+2. Return to Main Menu
 '''
                     )
 
                     selection_2 = input("Input number of desired option (1-4): ")
 
                     if selection_2 == "1":
-                        year = input("Enter the year you would like to see data for: ")
-
-                        for item in data_list:
-                            if item["Year"] == year:
-                                print(str(item) + "\n")
-
-                    elif selection_2 == "2":
                         day = input("Enter the day you would like to see data for: ")
 
                         for item in data_list:
                             if item["Weekday"] == day:
                                 print(str(item) + "\n")
 
-                    elif selection_2 == "3":
-                        year_comb = input("Enter the year you would like to see data for: ")
-                        day_comb = input("Enter the day you would like to see data for: ")
-                        
-                        for item in data_list:
-                            if item["Year"] == year_comb and item["Weekday"] == day_comb:
-                                print(str(item) + "\n")
-
-                    elif selection == "4":
+                    elif selection == "2":
                         inner_loop_2 = False
                     
                     else: 
