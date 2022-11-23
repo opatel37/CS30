@@ -92,29 +92,67 @@ DATE MANAGEMENT MAIN MENU
 '''
 Filter By: 
 1. Day of the Week
-2. Month
-3. Day & Month
-2. Return to Main Menu
+2. Date
+3. Return to Main Menu
 '''
                     )
 
-                    selection_2 = input("Input number of desired option (1-4): ")
+                    selection_2 = input("Input number of desired option (1-3): ")
 
                     if selection_2 == "1":
                         day = input("Enter the day you would like to see data for: ")
 
                         for item in data_list:
-                            if item["Weekday"] == day:
+                            if item["Weekday"] == day.capitalize():
                                 print(str(item) + "\n")
 
-                    elif selection == "2":
+                    elif selection_2 == "2":
+                        date = input("Enter the date you would like to see data for (DD/MM/YYYY): ")
+
+                        for item in data_list:
+                            if item["Date"] == date:
+                                print(str(item) + "\n")
+
+
+                    elif selection_2 == "3":
                         inner_loop_2 = False
                     
                     else: 
                         print("Invalid Entry")
             
             case "3":
-                print("3")
+                # Set inner loop 
+                inner_loop_3 = True
+
+                while inner_loop_3:
+                    print(
+'''
+Sort By:
+1. Day of the Week
+2. Cumulative Value (Increasing)
+3. Cumulative Value (Decreasing)
+4. Return to Main Menu
+'''
+                    )
+
+                    selection_3 = input("Input number of desired option (1-3): ")
+
+                    if selection_3 == "1":
+                        # Loop through list of dicts then loop through the weekday key, values then swap dicts in the list accordingly
+                        print("1")
+
+                    elif selection_3 == "2":
+                        print("2")
+
+                    elif selection_3 == "3":
+                        print("3")
+                    
+                    elif selection_3 == "4":
+                        inner_loop_3 = False
+                    
+                    else: 
+                        print("Invalid Entry")
+
             case "4":
                 print("4")
             case "5":
