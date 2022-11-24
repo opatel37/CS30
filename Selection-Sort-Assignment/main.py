@@ -3,7 +3,7 @@ words = ["dog","at", "good", "eye", "cat", "ball", "fish"]
  
 def selectionSort(anArray):
     # Loop through array, stopping one before the last element
-    for fill_slot in range(0, len(anArray) -1):
+    for fill_slot in range(len(anArray)):
         # Create and set the fill slot(what might be swapped)
         min_position = fill_slot
 

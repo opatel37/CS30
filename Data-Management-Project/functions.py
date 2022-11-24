@@ -14,12 +14,12 @@ def save_file(selected_file):
     file.close()
 
 def selectionSort(anArray):
-    for fill_slot in range(0, len(anArray) -1):
+    for fill_slot in range(len(anArray)):
         min_position = fill_slot
 
         for post_fill in range(fill_slot +1, len(anArray)):
             
-            if anArray[post_fill] < anArray[min_position]:
+            if anArray[post_fill]["Date"] < anArray[min_position]["Date"]:
                 min_position = post_fill
 
         anArray[min_position], anArray[fill_slot] = anArray[fill_slot], anArray[min_position]

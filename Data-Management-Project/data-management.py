@@ -128,7 +128,7 @@ Filter By:
                     print(
 '''
 Sort By:
-1. Day of the Week
+1. Date
 2. Cumulative Value (Increasing)
 3. Cumulative Value (Decreasing)
 4. Return to Main Menu

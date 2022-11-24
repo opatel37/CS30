@@ -1,4 +1,5 @@
 import csv
+import datetime
 
 list = []
 
@@ -8,7 +9,11 @@ with open('./text.csv', 'r') as file:
         list.append(line.strip().split(','))
 
 
-print(list)
 
-def create_list_dict(list):
+# def create_list_dict(list):
     # take list and convert into list of dict
+present = datetime.datetime.now()
+future = datetime.datetime(3000, 1, 1)
+
+if present < future:
+    print(str(future) + "!")
