@@ -1,4 +1,5 @@
 import csv
+import datetime
 import functions
 import json
 
@@ -138,8 +139,9 @@ Sort By:
                     selection_3 = input("Input number of desired option (1-3): ")
 
                     if selection_3 == "1":
-                        # Loop through list of dicts then loop through the weekday key, values then swap dicts in the list accordingly
-                        print("1")
+                        date_list = functions.convert_str_to_datetime(data_list)
+                        functions.selectionSort(date_list)
+                        print(date_list)
 
                     elif selection_3 == "2":
                         print("2")

@@ -1,3 +1,4 @@
+import datetime
 import json
 
 # Functions
@@ -23,3 +24,14 @@ def selectionSort(anArray):
                 min_position = post_fill
 
         anArray[min_position], anArray[fill_slot] = anArray[fill_slot], anArray[min_position]
+
+def convert_str_to_datetime(data):
+    for item in data:
+        date_val = item["Date"].split("/")
+        for i in range(0, len(date_val)):
+            date_val[i] = int(date_val[i])
+            
+        date_item = str(datetime.date(date_val[2], date_val[1], date_val[0]))
+        item["Date"] = date_item
+
+    save_file(data)
