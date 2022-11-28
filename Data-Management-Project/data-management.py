@@ -139,12 +139,11 @@ Sort By:
                     selection_3 = input("Input number of desired option (1-3): ")
 
                     if selection_3 == "1":
-                        date_list = functions.convert_str_to_datetime(data_list)
-                        functions.selectionSort(date_list)
-                        print(date_list)
+                        functions.selectionSort(data_list, "Date")
+                        print("Data has been sorted; data can now be printed in order")
 
                     elif selection_3 == "2":
-                        print("2")
+                        functions.selectionSort(data_list, "Cumulative")
 
                     elif selection_3 == "3":
                         print("3")

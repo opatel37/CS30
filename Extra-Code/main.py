@@ -17,3 +17,8 @@ future = datetime.datetime(3000, 1, 1)
 
 if present < future:
     print(str(future) + "!")
+
+# Print key value pairs
+def printWithKey(item_in):
+    for key, value in item_in.items():
+        print(key, ":", value)
