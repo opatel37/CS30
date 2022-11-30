@@ -1,4 +1,3 @@
-import datetime
 import json
 
 # Functions
@@ -14,20 +13,24 @@ def save_file(selected_file):
     json.dump(selected_file, file)
     file.close()
 
-def selectionSort(anArray, sort_param):
+def selection_sort(anArray, sort_param, compare_funct):
     for fill_slot in range(len(anArray)):
         min_pos = fill_slot
 
         for post_fill in range(fill_slot +1, len(anArray)):
             
-            if anArray[post_fill][sort_param] < anArray[min_pos][sort_param]:
+            if compare_funct(anArray[post_fill][sort_param], anArray[min_pos][sort_param]):
                 min_pos = post_fill
 
         anArray[min_pos], anArray[fill_slot] = anArray[fill_slot], anArray[min_pos]
 
-def compare_vals(anArray, post, min, sort):
-    if anArray
+def sort_inc(val_1, val_2):
+    if val_1 < val_2:
+        return True
 
+def sort_dec(val_1, val_2):
+    if val_1 > val_2:
+        return True
 
 
 # def convert_str_to_datetime(data):

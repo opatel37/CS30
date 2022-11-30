@@ -132,27 +132,36 @@ Sort By:
 1. Date
 2. Cumulative Value (Increasing)
 3. Cumulative Value (Decreasing)
-4. Return to Main Menu
+4. Save new data order
+5. Return to Main Menu
 '''
                     )
 
-                    selection_3 = input("Input number of desired option (1-3): ")
+                    selection_3 = input("Input number of desired option (1-5): ")
 
-                    if selection_3 == "1":
-                        functions.selectionSort(data_list, "Date")
-                        print("Data has been sorted; data can now be printed in order")
 
-                    elif selection_3 == "2":
-                        functions.selectionSort(data_list, "Cumulative")
+                    match selection_3:
+                        case "1":
+                            functions.selection_sort(data_list, "Date", functions.sort_inc)
+                            print("Data has been sorted; data can now be printed in order")
 
-                    elif selection_3 == "3":
-                        print("3")
+                        case "2":
+                            functions.selection_sort(data_list, "Cumulative", functions.sort_inc)
+                            print("Data has been sorted; data can now be printed in order")
+
+
+                        case "3":
+                            functions.selection_sort(data_list, "Cumulative", functions.sort_dec)
+                
+                        case "4":
+                            functions.save_file(data_list)
+                            print("Data has been sorted")
+
+                        case "5":
+                            inner_loop_3 = False
                     
-                    elif selection_3 == "4":
-                        inner_loop_3 = False
-                    
-                    else: 
-                        print("Invalid Entry")
+                        case other
+                            print("Invalid Entry")
 
             case "4":
                 print("4")
