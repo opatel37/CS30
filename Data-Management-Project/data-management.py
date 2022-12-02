@@ -5,6 +5,8 @@ import json
 
 # Direction,Year,Date,Weekday,Country,Commodity,Transport_Mode,Measure,Value,Cumulative
 
+# Multi Accs - make a write+ function to create a new list for a user
+
 # Data Management Project
 
 # Global Variable(s)
@@ -154,13 +156,13 @@ Sort By:
                             functions.selection_sort(data_list, "Cumulative", functions.sort_dec)
                 
                         case "4":
-                            functions.save_file(data_list)
+                            functions.save_file(data_list, 'trade-data-set.txt')
                             print("Data has been sorted")
 
                         case "5":
                             inner_loop_3 = False
                     
-                        case other
+                        case other:
                             print("Invalid Entry")
 
             case "4":

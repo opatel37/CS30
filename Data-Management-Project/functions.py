@@ -8,8 +8,8 @@ def read_file(file_name):
     file.close()
     return info
 
-def save_file(selected_file):
-    file = open('trade-data-set.txt', 'w')
+def save_file(selected_file, save_to):
+    file = open(save_to, 'w')
     json.dump(selected_file, file)
     file.close()
 
