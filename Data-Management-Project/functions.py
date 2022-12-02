@@ -8,9 +8,9 @@ def read_file(file_name):
     file.close()
     return info
 
-def save_file(selected_file, save_to):
+def save_data(selected_data, save_to):
     file = open(save_to, 'w')
-    json.dump(selected_file, file)
+    json.dump(selected_data, file)
     file.close()
 
 def selection_sort(anArray, sort_param, compare_funct):

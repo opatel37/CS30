@@ -9,7 +9,8 @@ import json
 # Data Management Project
 
 # Global Variable(s)
-data_list = functions.read_file('./trade-data-set.txt')
+data_list = functions.read_file('./text-files/trade-data-set.txt')
+fav_list = functions.read_file('./text-files/favorites.txt')
 
 # Run main function
 def main():
@@ -161,9 +162,22 @@ Sort By:
                             print("Invalid Entry")
 
             case "4":
-                print("4")
+                temp_fav_list = {}
+
+                selection_4 = input("Input date of trade you wish to add to favorites: ")
+
+                # Functionize so if no trade took place that day it returns -1
+                for i in range(0, len(data_list)):
+                    if data_list[i]["Date"] == selection_4:
+                        temp_fav_list.append(data_list[i])
+                
+                fav_list.append(temp_fav_list)
+                functions.save_data(fav_list, './text-files/favorites.txt')
+
             case "5":
-                print("5")
+                selection_5 = input("Input date of trade you wish to remove from favorites list: ")
+
+                # for i in 
             case "6":
                 print("6")
             case "7":
