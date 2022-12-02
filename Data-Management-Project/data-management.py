@@ -1,5 +1,4 @@
 import csv
-import datetime
 import functions
 import json
 
@@ -134,32 +133,28 @@ Sort By:
 1. Date
 2. Cumulative Value (Increasing)
 3. Cumulative Value (Decreasing)
-4. Save new data order
-5. Return to Main Menu
+4. Return to Main Menu
 '''
                     )
 
-                    selection_3 = input("Input number of desired option (1-5): ")
+                    selection_3 = input("Input number of desired option (1-4): ")
 
 
                     match selection_3:
                         case "1":
                             functions.selection_sort(data_list, "Date", functions.sort_inc)
-                            print("Data has been sorted; data can now be printed in order")
+                            print(data_list)
 
                         case "2":
                             functions.selection_sort(data_list, "Cumulative", functions.sort_inc)
-                            print("Data has been sorted; data can now be printed in order")
+                            print(data_list)
 
 
                         case "3":
                             functions.selection_sort(data_list, "Cumulative", functions.sort_dec)
+                            print(data_list)
                 
                         case "4":
-                            functions.save_file(data_list, 'trade-data-set.txt')
-                            print("Data has been sorted")
-
-                        case "5":
                             inner_loop_3 = False
                     
                         case other:
