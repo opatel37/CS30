@@ -162,8 +162,6 @@ Sort By:
                             print("Invalid Entry")
 
             case "4":
-                temp_fav_list = {}
-
                 selection_4 = input("Input date of trade you wish to add to favorites: ")
 
                 # Functionize so if no trade took place that day it returns -1
@@ -177,9 +175,14 @@ Sort By:
             case "5":
                 selection_5 = input("Input date of trade you wish to remove from favorites list: ")
 
-                # for i in 
+                for val in fav_list:
+                    if val == selection_5:
+                        val.remove()
+
             case "6":
-                print("6")
+                for item in fav_list:
+                    for key, value in item:
+                        print(key, ":", value)
             case "7":
                 loop = False
                 print ("Program Terminated")
