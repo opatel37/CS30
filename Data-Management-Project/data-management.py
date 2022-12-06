@@ -11,6 +11,7 @@ import json
 # Global Variable(s)
 data_list = functions.read_file('./text-files/trade-data-set.txt')
 fav_list = functions.read_file('./text-files/favorites.txt')
+user_creds = functions.read_file('./text-file/login-credtials.txt')
 
 # Run main function
 def main():
@@ -18,6 +19,34 @@ def main():
     # Local Variable(s)
     loop = True
     line_num_1_archive = 0
+
+    # Login or Sign-up Page
+    print(
+'''
+Welcome to Your Data Manager!
+1. Login in
+2. Sign up
+'''
+    )
+
+    option = input("Selection an option (1 or 2): ")
+
+    if option == "1":
+        # Login function
+        # Login page
+        print(
+'''
+Please login to access data...
+'''
+        )
+
+        username = input("Username: ")
+        password = input("Password: ")
+
+        if username ==  
+        
+    elif option == "2":
+        # Sign up function
 
     # Main Menu (while loop)
     while loop:
@@ -36,9 +65,9 @@ DATE MANAGEMENT MAIN MENU
         '''
             )
 
-        selection = input("Input number of desired option (1-7): ")
+        select = input("Input number of desired option (1-7): ")
 
-        match selection:
+        match select:
             case "1":
 
                 # Track lines printed
@@ -61,10 +90,10 @@ DATE MANAGEMENT MAIN MENU
                     )
 
                     # Get input for inner loop
-                    selection_1 = input("Input number of desired option (1-3): ")
+                    select_1 = input("Input number of desired option (1-3): ")
 
                     # Process input
-                    if selection_1 == "1":
+                    if select_1 == "1":
                         # Add to line tracker
                         line_num_1 += 10
 
@@ -72,14 +101,14 @@ DATE MANAGEMENT MAIN MENU
                         for i in range(line_num_1, line_num_1 + 10):
                             print("\n" + str(data_list[i]))
 
-                    elif selection_1 == "2":
+                    elif select_1 == "2":
                         line_num_1 = line_num_1_archive
 
                         # print(data_list[line_num_1:line_num_1 + 10])
                         for i in range(line_num_1, line_num_1 + 10):
                             print("\n" + str(data_list[i]))
 
-                    elif selection_1 == "3":
+                    elif select_1 == "3":
                         line_num_1_archive = line_num_1
                         inner_loop_1 = False
 
@@ -100,16 +129,16 @@ Filter By:
 '''
                     )
 
-                    selection_2 = input("Input number of desired option (1-3): ")
+                    select_2 = input("Input number of desired option (1-3): ")
 
-                    if selection_2 == "1":
+                    if select_2 == "1":
                         day = input("Enter the day you would like to see data for: ")
 
                         for item in data_list:
                             if item["Weekday"] == day.capitalize():
                                 print(str(item) + "\n")
 
-                    elif selection_2 == "2":
+                    elif select_2 == "2":
                         date = input("Enter the date you would like to see data for (DD/MM/YYYY): ")
 
                         for item in data_list:
@@ -117,7 +146,7 @@ Filter By:
                                 print(str(item) + "\n")
 
 
-                    elif selection_2 == "3":
+                    elif select_2 == "3":
                         inner_loop_2 = False
                     
                     else: 
@@ -138,10 +167,10 @@ Sort By:
 '''
                     )
 
-                    selection_3 = input("Input number of desired option (1-4): ")
+                    select_3 = input("Input number of desired option (1-4): ")
 
 
-                    match selection_3:
+                    match select_3:
                         case "1":
                             functions.selection_sort(data_list, "Date", functions.sort_inc)
                             print(data_list)
@@ -162,30 +191,35 @@ Sort By:
                             print("Invalid Entry")
 
             case "4":
-                selection_4 = input("Input date of trade you wish to add to favorites: ")
+                select_4 = input("Input date of trade you wish to add to favorites (YYYY-MM-DD): ")
 
-                # Functionize so if no trade took place that day it returns -1
+                # Functionize so if no trade took place that day it returns -1 and check if trade is already in fav list
                 for i in range(0, len(data_list)):
-                    if data_list[i]["Date"] == selection_4:
-                        temp_fav_list.append(data_list[i])
+                    if data_list[i]["Date"] == select_4:
+                        fav_list.append(data_list[i])
                 
-                fav_list.append(temp_fav_list)
                 functions.save_data(fav_list, './text-files/favorites.txt')
 
             case "5":
-                selection_5 = input("Input date of trade you wish to remove from favorites list: ")
+                select_5 = input("Input date of trade you wish to remove from favorites list (YYYY-MM-DD): ")
 
-                for val in fav_list:
-                    if val == selection_5:
-                        val.remove()
+                search_return_val = functions.search_data(fav_list, "Date", select_5)
+
+                if search_return_val == -1:
+                    print("Data was not found in list")
+                else:
+                    fav_list.pop(search_return_val)
+
+                functions.save_data(fav_list, './text-files/favorites.txt')
 
             case "6":
-                for item in fav_list:
-                    for key, value in item:
-                        print(key, ":", value)
+                for i in range(0, len(fav_list)):
+                  print("\n" + str(data_list[i]))
+
             case "7":
                 loop = False
                 print ("Program Terminated")
+
             case other:
                 print("Invalid Entry")
 

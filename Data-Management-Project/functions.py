@@ -32,15 +32,13 @@ def sort_dec(val_1, val_2):
     if val_1 > val_2:
         return True
 
+def search_data(list, key, val):
+  for item in list:
+      if item[key] == val:
+          return list.index(item)
 
-# def convert_str_to_datetime(data):
-#     for item in data:
-#         date_val = item["Date"].split("/")
-#         for i in range(0, len(date_val)):
-#             date_val[i] = int(date_val[i])
-            
-#         date_item = str(datetime.date(date_val[2], date_val[1], date_val[0]))
-#         item["Date"] = date_item
+  return -1
 
-#     save_file(data)
-
+def check_two_vals(list, username, password):
+    for i in range(0, len(list)):
+        
