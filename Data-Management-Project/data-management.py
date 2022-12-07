@@ -17,7 +17,6 @@ user_creds = functions.read_file('./text-file/login-credtials.txt')
 def main():
 
     # Local Variable(s)
-    loop = True
     line_num_1_archive = 0
 
     # Login or Sign-up Page
@@ -34,19 +33,22 @@ Welcome to Your Data Manager!
     if option == "1":
         # Login function
         # Login page
-        print(
-'''
-Please login to access data...
-'''
-        )
+        print("Please login to access data...")
 
-        username = input("Username: ")
-        password = input("Password: ")
+        login_username = input("Username: ")
+        login_password = input("Password: ")
 
-        if username ==  
+        if functions.check_creds(user_creds, login_username, login_password):
+            loop = True
         
     elif option == "2":
         # Sign up function
+        print("Please create username and password...")
+
+        sign_up_username = input("Username: ")
+        sign_up_password = input("Password: ")
+
+        
 
     # Main Menu (while loop)
     while loop:

@@ -2,12 +2,11 @@ import time
 
 # Function(s)
 def linearSearch(anArray, item):
-    for i in anArray:
-        if i == item:
-            return anArray.index(item)
+    for i in range(0, len(anArray)):
+        if anArray[i] == item:
+            return i
         
     return -1
-
 
 def binarySearch(anArray, item):
     # Initialize lower and upper indices
@@ -25,7 +24,6 @@ def binarySearch(anArray, item):
             upper_index = middle_index - 1
         elif (item > anArray[middle_index]):
             lower_index = middle_index + 1
-
 
     # If item is not found
     return -1

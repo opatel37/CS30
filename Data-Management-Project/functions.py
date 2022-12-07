@@ -8,7 +8,7 @@ def read_file(file_name):
     file.close()
     return info
 
-def save_data(selected_data, save_to):
+def write_data(selected_data, save_to):
     file = open(save_to, 'w')
     json.dump(selected_data, file)
     file.close()
@@ -39,6 +39,11 @@ def search_data(list, key, val):
 
   return -1
 
-def check_two_vals(list, username, password):
+def check_creds(list, username, password):
     for i in range(0, len(list)):
-        
+        if list[i]["Username"] == username and list[i]["Password"] == password:
+            return True
+
+    return False
+
+
