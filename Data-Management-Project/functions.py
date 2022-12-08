@@ -39,6 +39,41 @@ def search_data(list, key, val):
 
   return -1
 
+def login(user_list):
+    print("Please login to access data...")
+
+    login_username = input("Username: ")
+    login_password = input("Password: ")
+
+    if check_creds(user_list, login_username, login_password):
+        fav_list = open_user_spec_fav_list(user_list, login_username)
+        loop = True
+
+
+def sign_up(user_list):
+    # Sign up function
+        print("Please create username and password...")
+
+        sign_up_username = input("Username: ")
+        sign_up_password = input("Password: ")
+
+        if check_creds:
+            return -1
+        else:
+            user_list.append(create_new_acc(sign_up_username, sign_up_password))
+            write_data(user_list, './text-files/users.txt')
+            login()
+
+
+def create_new_acc(username, password):
+    dict = {
+        "Username": username,
+        "Password": password,
+        "Favorites": []
+    }
+
+    return dict
+
 def check_creds(list, username, password):
     for i in range(0, len(list)):
         if list[i]["Username"] == username and list[i]["Password"] == password:
@@ -46,4 +81,9 @@ def check_creds(list, username, password):
 
     return False
 
+def open_user_spec_fav_list(list, username):
+    for i in range(0, len(list)):
+        if list[i]["Username"] == username:
+            user_fav = list[i]["Favorites"]
 
+    return user_fav
