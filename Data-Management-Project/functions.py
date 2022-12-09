@@ -39,7 +39,7 @@ def search_data(list, key, val):
 
   return -1
 
-def login(user_list):
+def login(user_list, start_loop):
     print("Please login to access data...")
 
     login_username = input("Username: ")
@@ -47,8 +47,8 @@ def login(user_list):
 
     if check_creds(user_list, login_username, login_password):
         fav_list = open_user_spec_fav_list(user_list, login_username)
-        loop = True
-
+        start_loop = True
+        return fav_list
 
 def sign_up(user_list):
     # Sign up function
@@ -57,13 +57,12 @@ def sign_up(user_list):
         sign_up_username = input("Username: ")
         sign_up_password = input("Password: ")
 
-        if check_creds:
-            return -1
+        if check_creds(user_list, sign_up_username, sign_up_password):
+            print("Username/Password already in use")
         else:
             user_list.append(create_new_acc(sign_up_username, sign_up_password))
             write_data(user_list, './text-files/users.txt')
-            login()
-
+            login(user_list)
 
 def create_new_acc(username, password):
     dict = {

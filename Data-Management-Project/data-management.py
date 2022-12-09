@@ -9,7 +9,7 @@ import json
 # Data Management Project
 
 # Global Variable(s)
-# Read files
+# Data files
 data_list = functions.read_file('./text-files/trade-data-set.txt')
 users = functions.read_file('./text-files/users.txt')
 # Other(s)
@@ -20,7 +20,7 @@ def main():
 
     # Local Variable(s)
     line_num_1_archive = 0
-
+    loop = False
     # Login or Sign-up Page
     print(
 '''
@@ -34,9 +34,9 @@ Welcome to Your Data Manager!
 
     if option == "1":
         # Login function
-        functions.login()        
+        functions.login(users,)
     elif option == "2":
-        functions.sign_up()
+        functions.sign_up(users)
         
 
     # Main Menu (while loop)
