@@ -13,6 +13,11 @@ def write_data(selected_data, save_to):
     json.dump(selected_data, file)
     file.close()
 
+def save_favs(user_list, user, save_list):
+    for i in range(0, len(user_list)):
+        if user[i]["Username"] == user:
+            user[i]["Favorites"] == save_list
+
 def selection_sort(anArray, sort_param, compare_funct):
     for fill_slot in range(len(anArray)):
         min_pos = fill_slot
@@ -39,16 +44,19 @@ def search_data(list, key, val):
 
   return -1
 
-def login(user_list, start_loop):
+def login(user_list):
     print("Please login to access data...")
 
     login_username = input("Username: ")
     login_password = input("Password: ")
 
     if check_creds(user_list, login_username, login_password):
-        fav_list = open_user_spec_fav_list(user_list, login_username)
-        start_loop = True
-        return fav_list
+        user_info = open_user_spec_fav_list(user_list, login_username)
+        return user_info
+
+    else:
+        return -1
+
 
 def sign_up(user_list):
     # Sign up function
@@ -73,6 +81,8 @@ def create_new_acc(username, password):
 
     return dict
 
+# Take in username and password along with the list of credentials
+# Return True or False
 def check_creds(list, username, password):
     for i in range(0, len(list)):
         if list[i]["Username"] == username and list[i]["Password"] == password:
@@ -83,6 +93,4 @@ def check_creds(list, username, password):
 def open_user_spec_fav_list(list, username):
     for i in range(0, len(list)):
         if list[i]["Username"] == username:
-            user_fav = list[i]["Favorites"]
-
-    return user_fav
+            return list[i]
