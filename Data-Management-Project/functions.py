@@ -13,11 +13,6 @@ def write_data(selected_data, save_to):
     json.dump(selected_data, file)
     file.close()
 
-def save_favs(user_list, user, save_list):
-    for i in range(0, len(user_list)):
-        if user[i]["Username"] == user:
-            user[i]["Favorites"] == save_list
-
 def selection_sort(anArray, sort_param, compare_funct):
     for fill_slot in range(len(anArray)):
         min_pos = fill_slot
@@ -57,7 +52,6 @@ def login(user_list):
     else:
         return -1
 
-
 def sign_up(user_list):
     # Sign up function
         print("Please create username and password...")
@@ -70,7 +64,6 @@ def sign_up(user_list):
         else:
             user_list.append(create_new_acc(sign_up_username, sign_up_password))
             write_data(user_list, './text-files/users.txt')
-            login(user_list)
 
 def create_new_acc(username, password):
     dict = {

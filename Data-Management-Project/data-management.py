@@ -2,9 +2,6 @@ import csv
 import functions
 import json
 
-# CHANGE FAV LIST TO CUR_USER
-
-
 # Direction,Year,Date,Weekday,Country,Commodity,Transport_Mode,Measure,Value,Cumulative
 
 # Multi Accs - make a write+ function to create a new list for a user
@@ -24,29 +21,35 @@ def main():
     # Local Variable(s)
     line_num_1_archive = 0
     main_loop = False
-    # Login or Sign-up Page
-    print(
-'''
+    login_loop = True
+
+    while login_loop:
+        # Login or Sign-up Page
+        print(
+        '''
 Welcome to Your Data Manager!
 1. Login in
 2. Sign up
-'''
-    )
+        '''
+        )
 
-    option = input("Selection an option (1 or 2): ")
+        option = input("Selection an option (1 or 2): ")
 
-    if option == "1":
-        user_login = functions.login(users)
-        # Login function
-        if user_login == -1:
-            print("Inccorect Username or Password")
-        else:
-            cur_user = user_login
-            main_loop = True
-    
-    elif option == "2":
-        functions.sign_up(users)
+        if option == "1":
+            user_login = functions.login(users)
+            # Login function
+            if user_login == -1:
+                print("Inccorect Username or Password")
+            else:
+                cur_user = user_login
+                main_loop = True
+                login_loop = False
         
+        elif option == "2":
+            functions.sign_up(users)
+
+        else: 
+            print("Invalid Entry")
 
     # Main Menu (while loop)
     while main_loop:
@@ -196,26 +199,35 @@ Sort By:
                 # Functionize so if no trade took place that day it returns -1 and check if trade is already in fav list
                 for i in range(0, len(data_list)):
                     if data_list[i]["Date"] == select_4:
-                        fav_list.append(data_list[i])
+                        cur_user["Favorites"].append(data_list[i])
                 
-                functions.save_favs(users, user_login["Username"], fav_list)
+                for i in range(0, len(users)):
+                    if users[i]["Username"] == cur_user["Username"]:
+                        users[i]["Favorites"] = cur_user["Favorites"]
+                
+                functions.write_data(users, './text-files/users.txt')
+                    
 
             case "5":
                 select_5 = input("Input date of trade you wish to remove from favorites list (YYYY-MM-DD): ")
 
-                search_return_val = functions.search_data(fav_list, "Date", select_5)
+                search_return_val = functions.search_data(cur_user, "Date", select_5)
 
                 if search_return_val == -1:
                     print("Data was not found in list")
                 else:
-                    fav_list.pop(search_return_val)
-
-                functions.save_data(fav_list, './text-files/favorites.txt')
+                    cur_user.pop(search_return_val)
+                    for i in range(0, len(users)):
+                        if users[i]["Username"] == cur_user["Username"]:
+                            users[i]["Favorites"] = cur_user["Favorites"]
+ 
+                    
+                functions.write_data(users, './text-files/favorites.txt')
 
             case "6":
-                print("6")
-                # for i in range(0, len(fav_list)):
-                #   print("\n" + str(data_list[i]))
+                for i in range(0, len(cur_user["Favorites"])):
+                    print("\n" + str(cur_user["Favorites"][i]))
+
 
             case "7":
                 main_loop = False
