@@ -19,7 +19,7 @@ cur_user = None
 def main():
 
     # Local Variable(s)
-    line_num_1_archive = 0
+    line_num_1_archive = 0 #used in selection 1
     main_loop = False
     login_loop = True
 
@@ -101,15 +101,14 @@ DATE MANAGEMENT MAIN MENU
                         line_num_1 += 10
 
                         # print(data_list[line_num_1:line_num_1 + 10])
-                        for i in range(line_num_1, line_num_1 + 10):
-                            print("\n" + str(data_list[i]))
-
+                        functions.print_10_lines(data_list, line_num_1) 
+                    
                     elif select_1 == "2":
+                        # Set current line # to the one the user was at during last session
                         line_num_1 = line_num_1_archive
 
                         # print(data_list[line_num_1:line_num_1 + 10])
-                        for i in range(line_num_1, line_num_1 + 10):
-                            print("\n" + str(data_list[i]))
+                        functions.print_10_lines(data_list, line_num_1)
 
                     elif select_1 == "3":
                         line_num_1_archive = line_num_1
@@ -137,17 +136,12 @@ Filter By:
                     if select_2 == "1":
                         day = input("Enter the day you would like to see data for: ")
 
-                        for item in data_list:
-                            if item["Weekday"] == day.capitalize():
-                                print(str(item) + "\n")
+                        functions.filter_search(data_list, day, "Weekday")
 
                     elif select_2 == "2":
-                        date = input("Enter the date you would like to see data for (DD/MM/YYYY): ")
+                        date = input("Enter the date you would like to see data for (YYYY-MM-DD): ")
 
-                        for item in data_list:
-                            if item["Date"] == date:
-                                print(str(item) + "\n")
-
+                        functions.filter_search(data_list, date, "Date")
 
                     elif select_2 == "3":
                         inner_loop_2 = False
@@ -201,26 +195,21 @@ Sort By:
                     if data_list[i]["Date"] == select_4:
                         cur_user["Favorites"].append(data_list[i])
                 
-                for i in range(0, len(users)):
-                    if users[i]["Username"] == cur_user["Username"]:
-                        users[i]["Favorites"] = cur_user["Favorites"]
-                
+                # Add to current user's fav list
+                functions.add_cur_user_fav(users, cur_user["Favorites"])               
                 functions.write_data(users, './text-files/users.txt')
-                    
-
+            
             case "5":
-                select_5 = input("Input date of trade you wish to remove from favorites list (YYYY-MM-DD): ")
+                select_5 = input("Input date of trade you wish to delete from favorites (YYYY-MM-DD): ")
 
                 search_return_val = functions.search_data(cur_user, "Date", select_5)
-
+                
                 if search_return_val == -1:
                     print("Data was not found in list")
                 else:
                     cur_user.pop(search_return_val)
-                    for i in range(0, len(users)):
-                        if users[i]["Username"] == cur_user["Username"]:
-                            users[i]["Favorites"] = cur_user["Favorites"]
- 
+                    # Add to current user's fav list
+                    functions.add_cur_user_fav(users, cur_user)
                     
                 functions.write_data(users, './text-files/favorites.txt')
 

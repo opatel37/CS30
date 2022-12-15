@@ -87,3 +87,27 @@ def open_user_spec_fav_list(list, username):
     for i in range(0, len(list)):
         if list[i]["Username"] == username:
             return list[i]
+
+def print_10_lines(list, line_num):
+    # print(data_list[line_num_1:line_num_1 + 10])
+    for i in range(line_num, line_num + 10):
+        print("\n" + str(list[i]))
+
+def filter_search(list, filter, key):
+    for item in list:
+        if item[key] == filter.capitalize():
+            print("\n" + str(item))
+
+def add_to_fav(list, date, username):
+    for i in range(0, len(list)):
+        if list[i]["Date"] == date:
+            username["Favorites"].append(list[i])
+            return None
+
+    return -1
+
+def add_cur_user_fav(list, user):
+    for i in range(0, len(list)):
+        if list[i]["Username"] == user["Username"]:
+            list[i]["Favorites"] = user["Favorites"]
+ 
