@@ -83,6 +83,13 @@ def check_creds(list, username, password):
 
     return False
 
+def check_fav_list(user, item_in):
+    for i in range(len(user["Favorites"])):
+        if user["Favorites"][i]["Date"] == item_in:
+            return -1
+        else:
+            return None
+
 def open_user_spec_fav_list(list, username):
     for i in range(0, len(list)):
         if list[i]["Username"] == username:
@@ -113,7 +120,7 @@ def add_to_fav(list, date, username):
 
     return -1
 
-def add_cur_user_fav(list, user):
+def set_fav_list(list, user):
     for i in range(0, len(list)):
         if list[i]["Username"] == user["Username"]:
             list[i]["Favorites"] = user["Favorites"]
@@ -122,9 +129,12 @@ def print_out_list(list):
    for i in range(len(list)):
         print("\n" + str(list[i]))
 
-def main_menu(data, user_creds, all_users):
+def main_menu(data, user_creds, all_users, loop, line_tracker):
+    # Start main menu loop
+    loop = True
+
     # Main Menu (while loop)
-    while main_loop:
+    while loop:
         print(
         '''
 DATE MANAGEMENT MAIN MENU
@@ -177,13 +187,13 @@ DATE MANAGEMENT MAIN MENU
                     
                     elif select_1 == "2":
                         # Set current line # to the one the user was at during last session
-                        line_num_1 = line_num_1_archive
+                        line_num_1 = line_tracker
 
                         # print(data_list[line_num_1:line_num_1 + 10])
                         print_10_lines(data, line_num_1)
 
                     elif select_1 == "3":
-                        line_num_1_archive = line_num_1
+                        line_tracker = line_num_1
                         inner_loop_1 = False
 
                     else:
@@ -266,28 +276,34 @@ Sort By:
             case "4":
                 select_4 = input("Input date of trade you wish to add to favorites (YYYY-MM-DD): ")
 
-                # Functionize so if no trade took place that day it returns -1 and check if trade is already in fav list
-                for i in range(0, len(data)):
-                    if data[i]["Date"] == select_4:
-                        user_creds["Favorites"].append(data[i])
-                
-                # Add to current user's fav list
-                add_cur_user_fav(all_users, user_creds["Favorites"])               
-                write_data(all_users, './text-files/users.txt')
-            
+                # Check if item is already in fav list
+                if check_fav_list(user_creds, select_4) == -1:
+                    print("Item is already in favorites")
+                else:
+
+                    # Check if item exists, add if it does
+                    if add_to_fav(data, select_4, user_creds) == -1:
+                        print("Item DNE")
+                    else:
+                        print("Item has been added to favorites")
+                    
+                    # Add to current user's fav list
+                    write_data(all_users, './text-files/users.txt')
+
             case "5":
                 select_5 = input("Input date of trade you wish to remove from favorites (YYYY-MM-DD): ")
 
-                search_return_val = search_data(user_creds, "Date", select_5)
+                fav_list = user_creds["Favorites"]
                 
-                if search_return_val == -1:
-                    print("Data was not found in list")
+                search_return_idx = search_data(fav_list, "Date", select_5)
+                
+                if search_return_idx == -1:
+                    print("Data was not found in favorites")
                 else:
-                    user_creds.pop(search_return_val)
-                    # Add to current user's fav list
-                    add_cur_user_fav(all_users, user_creds)
+                    del user_creds["Favorites"][search_return_idx]
+                    print("Item has been removed from favorites")
                     
-                write_data(all_users, './text-files/favorites.txt')
+                write_data(all_users, './text-files/users.txt')
 
             case "6":
                 for i in range(0, len(user_creds["Favorites"])):
@@ -295,7 +311,7 @@ Sort By:
 
 
             case "7":
-                main_loop = False
+                loop = False
                 print ("Signed Out")
 
             case other:

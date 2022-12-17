@@ -19,9 +19,9 @@ cur_user = None
 def main():
 
     # Local Variable(s)
-    line_num_1_archive = 0 #used in selection 1
     main_loop = False
     login_loop = True
+    line_num_1_archive = 0 #used in selection 1
 
     while login_loop:
         # Login or Sign-up Page
@@ -30,23 +30,27 @@ def main():
 Welcome to Your Data Manager!
 1. Login in
 2. Sign up
+3. Exit
         '''
         )
 
-        option = input("Selection an option (1 or 2): ")
+        option = input("Selection an option (1 or 3): ")
 
         if option == "1":
-            user_login = functions.login(users)
+            cur_user = functions.login(users)
             # Login function
-            if user_login == -1:
+            if cur_user == -1:
                 print("Inccorect Username or Password")
             else:
-                cur_user = user_login
-                main_loop = True
-                login_loop = False
+                functions.set_fav_list(users, cur_user)
+                functions.main_menu(data_list, cur_user, users, main_loop, line_num_1_archive)
         
         elif option == "2":
             functions.sign_up(users)
+
+        elif option == "3":
+            login_loop = False
+            print("Program Terminated")
 
         else: 
             print("Invalid Entry")

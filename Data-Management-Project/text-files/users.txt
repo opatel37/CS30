@@ -1,1 +1,1 @@
-[{"Username": "test1", "Password": "test1", "Favorites": [{"Date": "2015-01-01", "Weekday": "Thursday", "Country": "All", "Commodity": "Electrical machinery and equip", "Transport_Mode": "All", "Measure": "$", "Value": "2000000", "Cumulative": "2000000"}, {"Date": "2015-02-02", "Weekday": "Monday", "Country": "All", "Commodity": "Electrical machinery and equip", "Transport_Mode": "All", "Measure": "$", "Value": "18000000", "Cumulative": "294000000"}]}]
+[{"Username": "test1", "Password": "test1", "Favorites": []}, {"Username": "test2", "Password": "test2", "Favorites": []}]
