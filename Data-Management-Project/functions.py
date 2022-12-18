@@ -13,6 +13,7 @@ def write_data(selected_data, save_to):
     json.dump(selected_data, file)
     file.close()
 
+# Used to sort data depending on which option user wants (Inc/Dec)
 def selection_sort(anArray, sort_param, compare_funct):
     for fill_slot in range(len(anArray)):
         min_pos = fill_slot
@@ -24,21 +25,25 @@ def selection_sort(anArray, sort_param, compare_funct):
 
         anArray[min_pos], anArray[fill_slot] = anArray[fill_slot], anArray[min_pos]
 
+# Sort by increasing values
 def sort_inc(val_1, val_2):
     if val_1 < val_2:
         return True
 
+# Sory by decreasing values
 def sort_dec(val_1, val_2):
     if val_1 > val_2:
         return True
 
+# Search for item and return index if found
 def search_data(list, key, val):
-  for i in range(len(list)):
+    for i in range(len(list)):
       if list[i][key] == val:
           return i
 
-  return -1
+    return -1
 
+# Verify credentials and login to correct user
 def login(user_list):
     print("Please login to access data...")
 
@@ -46,14 +51,12 @@ def login(user_list):
     login_password = input("Password: ")
 
     if check_creds(user_list, login_username, login_password):
-        user_info = open_user_spec_fav_list(user_list, login_username)
-        return user_info
-
+        return None
     else:
         return -1
 
+# Take in list of all users, return dict containing new user credential
 def sign_up(user_list):
-    # Sign up function
         print("Please create username and password...")
 
         sign_up_username = input("Username: ")
@@ -65,6 +68,7 @@ def sign_up(user_list):
             user_list.append(create_new_acc(sign_up_username, sign_up_password))
             write_data(user_list, './text-files/users.txt')
 
+# Used to convert given credentials into a new user in the form of a dict
 def create_new_acc(username, password):
     dict = {
         "Username": username,
@@ -74,7 +78,7 @@ def create_new_acc(username, password):
 
     return dict
 
-# Take in username and password along with the list of credentials
+# Verify inputed credentials against data base
 # Return True or False
 def check_creds(list, username, password):
     for i in range(0, len(list)):
@@ -83,6 +87,7 @@ def check_creds(list, username, password):
 
     return False
 
+# Check if item is in fav list or not
 def check_fav_list(user, item_in):
     for i in range(len(user["Favorites"])):
         if user["Favorites"][i]["Date"] == item_in:
@@ -90,16 +95,12 @@ def check_fav_list(user, item_in):
         else:
             return None
 
-def open_user_spec_fav_list(list, username):
-    for i in range(0, len(list)):
-        if list[i]["Username"] == username:
-            return list[i]
-
+# Used in selection 1 of main menu func
 def print_10_lines(list, line_num):
-    # print(data_list[line_num_1:line_num_1 + 10])
     for i in range(line_num, line_num + 10):
         print("\n" + str(list[i]))
 
+# Search and output any items that fit chosen filter
 def filter_search(list, filter, key):
     temp_list = []
     for item in list:
@@ -111,7 +112,8 @@ def filter_search(list, filter, key):
         return temp_list
     else:
         return temp_list
-    
+
+# Add item to current users favorites list according to given date
 def add_to_fav(list, date, username):
     for i in range(0, len(list)):
         if list[i]["Date"] == date:
@@ -120,15 +122,12 @@ def add_to_fav(list, date, username):
 
     return -1
 
-def set_fav_list(list, user):
-    for i in range(0, len(list)):
-        if list[i]["Username"] == user["Username"]:
-            list[i]["Favorites"] = user["Favorites"]
- 
+# Print out items in a given list
 def print_out_list(list):
    for i in range(len(list)):
         print("\n" + str(list[i]))
 
+# Start main menu
 def main_menu(data, user_creds, all_users, loop, line_tracker):
     # Start main menu loop
     loop = True
@@ -146,7 +145,6 @@ DATE MANAGEMENT MAIN MENU
 5. Remove Data from Favourites List
 6. Display Favourites List
 7. Exit
-
         '''
             )
 
@@ -158,7 +156,6 @@ DATE MANAGEMENT MAIN MENU
                 # Track lines printed
                 line_num_1 = 0
 
-                # print(data_list[line_num_1:line_num_1 + 10])
                 for i in range(line_num_1, line_num_1 + 10):
                     print("\n" + str(data[i]))
                 
@@ -182,14 +179,12 @@ DATE MANAGEMENT MAIN MENU
                         # Add to line tracker
                         line_num_1 += 10
 
-                        # print(data_list[line_num_1:line_num_1 + 10])
                         print_10_lines(data, line_num_1) 
                     
                     elif select_1 == "2":
                         # Set current line # to the one the user was at during last session
                         line_num_1 = line_tracker
 
-                        # print(data_list[line_num_1:line_num_1 + 10])
                         print_10_lines(data, line_num_1)
 
                     elif select_1 == "3":
@@ -252,7 +247,8 @@ Sort By:
 
                     select_3 = input("Input number of desired option (1-4): ")
 
-
+                    # Sort data according to users input then print sorted data
+                    # Changes only effect current session
                     match select_3:
                         case "1":
                             selection_sort(data, "Date", sort_inc)
@@ -276,7 +272,7 @@ Sort By:
             case "4":
                 select_4 = input("Input date of trade you wish to add to favorites (YYYY-MM-DD): ")
 
-                # Check if item is already in fav list
+                # Check if item is already in fav list, don't act if it does
                 if check_fav_list(user_creds, select_4) == -1:
                     print("Item is already in favorites")
                 else:
@@ -287,14 +283,17 @@ Sort By:
                     else:
                         print("Item has been added to favorites")
                     
-                    # Add to current user's fav list
+                    # Save current sessions fav list to file
                     write_data(all_users, './text-files/users.txt')
 
             case "5":
                 select_5 = input("Input date of trade you wish to remove from favorites (YYYY-MM-DD): ")
 
+                # Access current users fav list:
                 fav_list = user_creds["Favorites"]
                 
+                # Search through users fav list 
+                # Returns item for that date or returns -1 if no trade was found
                 search_return_idx = search_data(fav_list, "Date", select_5)
                 
                 if search_return_idx == -1:
@@ -308,7 +307,6 @@ Sort By:
             case "6":
                 for i in range(0, len(user_creds["Favorites"])):
                     print("\n" + str(user_creds["Favorites"][i]))
-
 
             case "7":
                 loop = False

@@ -1,10 +1,4 @@
-import csv
 import functions
-import json
-
-# Direction,Year,Date,Weekday,Country,Commodity,Transport_Mode,Measure,Value,Cumulative
-
-# Multi Accs - make a write+ function to create a new list for a user
 
 # Data Management Project
 
@@ -12,16 +6,15 @@ import json
 # Data files
 data_list = functions.read_file('./text-files/trade-data-set.txt')
 users = functions.read_file('./text-files/users.txt')
-# Other(s)
+# Others
 cur_user = None
 
 # Run main function
 def main():
-
     # Local Variable(s)
     main_loop = False
     login_loop = True
-    line_num_1_archive = 0 #used in selection 1
+    line_num_1_archive = 0 #used in selection 1 of main menu func
 
     while login_loop:
         # Login or Sign-up Page
@@ -34,18 +27,19 @@ Welcome to Your Data Manager!
         '''
         )
 
+        # Get input
         option = input("Selection an option (1 or 3): ")
 
         if option == "1":
             cur_user = functions.login(users)
-            # Login function
+            # Login to account
             if cur_user == -1:
                 print("Inccorect Username or Password")
             else:
-                functions.set_fav_list(users, cur_user)
                 functions.main_menu(data_list, cur_user, users, main_loop, line_num_1_archive)
         
         elif option == "2":
+            # Create account
             functions.sign_up(users)
 
         elif option == "3":
@@ -55,4 +49,5 @@ Welcome to Your Data Manager!
         else: 
             print("Invalid Entry")
 
+# Call main function to start program
 main()
