@@ -50,8 +50,10 @@ def login(user_list):
     login_username = input("Username: ")
     login_password = input("Password: ")
 
-    if check_creds(user_list, login_username, login_password):
-        return None
+    if find_user(user_list, login_username, login_password):
+        # login_username is not a dict
+        fav_list = login_username['Favorites']
+        return fav_list
     else:
         return -1
 
@@ -62,7 +64,7 @@ def sign_up(user_list):
         sign_up_username = input("Username: ")
         sign_up_password = input("Password: ")
 
-        if check_creds(user_list, sign_up_username, sign_up_password):
+        if find_user(user_list, sign_up_username, sign_up_password):
             print("Username/Password already in use")
         else:
             user_list.append(create_new_acc(sign_up_username, sign_up_password))
@@ -80,20 +82,20 @@ def create_new_acc(username, password):
 
 # Verify inputed credentials against data base
 # Return True or False
-def check_creds(list, username, password):
+def find_user(list, username, password):
     for i in range(0, len(list)):
-        if list[i]["Username"] == username and list[i]["Password"] == password:
+        if list[i]['Username'] == username and list[i]['Password'] == password:
             return True
 
     return False
 
 # Check if item is in fav list or not
 def check_fav_list(user, item_in):
-    for i in range(len(user["Favorites"])):
-        if user["Favorites"][i]["Date"] == item_in:
+    for i in range(len(user['Favorites'])):
+        if user['Favorites'][i]['Date'] == item_in:
             return -1
-        else:
-            return None
+    else:
+        return None
 
 # Used in selection 1 of main menu func
 def print_10_lines(list, line_num):
@@ -116,8 +118,8 @@ def filter_search(list, filter, key):
 # Add item to current users favorites list according to given date
 def add_to_fav(list, date, username):
     for i in range(0, len(list)):
-        if list[i]["Date"] == date:
-            username["Favorites"].append(list[i])
+        if list[i]['Date'] == date:
+            username['Favorites'].append(list[i])
             return None
 
     return -1
@@ -290,7 +292,7 @@ Sort By:
                 select_5 = input("Input date of trade you wish to remove from favorites (YYYY-MM-DD): ")
 
                 # Access current users fav list:
-                fav_list = user_creds["Favorites"]
+                fav_list = user_creds['Favorites']
                 
                 # Search through users fav list 
                 # Returns item for that date or returns -1 if no trade was found
@@ -299,14 +301,14 @@ Sort By:
                 if search_return_idx == -1:
                     print("Data was not found in favorites")
                 else:
-                    del user_creds["Favorites"][search_return_idx]
+                    del user_creds['Favorites'][search_return_idx]
                     print("Item has been removed from favorites")
                     
                 write_data(all_users, './text-files/users.txt')
 
             case "6":
-                for i in range(0, len(user_creds["Favorites"])):
-                    print("\n" + str(user_creds["Favorites"][i]))
+                for i in range(0, len(user_creds['Favorites'])):
+                    print("\n" + str(user_creds['Favorites'][i]))
 
             case "7":
                 loop = False
