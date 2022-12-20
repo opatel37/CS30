@@ -52,8 +52,9 @@ def login(user_list):
 
     if find_user(user_list, login_username, login_password):
         # login_username is not a dict
-        fav_list = login_username['Favorites']
-        return fav_list
+        for i in range(len(user_list)):
+            if user_list[i]['Username'] == login_username:
+                return user_list[i]['Favorites']
     else:
         return -1
 
@@ -91,7 +92,7 @@ def find_user(list, username, password):
 
 # Check if item is in fav list or not
 def check_fav_list(user, item_in):
-    for i in range(len(user['Favorites'])):
+    for i in range(len(user)):
         if user['Favorites'][i]['Date'] == item_in:
             return -1
     else:
@@ -116,10 +117,10 @@ def filter_search(list, filter, key):
         return temp_list
 
 # Add item to current users favorites list according to given date
-def add_to_fav(list, date, username):
+def add_to_fav(list, date, favs):
     for i in range(0, len(list)):
         if list[i]['Date'] == date:
-            username['Favorites'].append(list[i])
+            favs.append(list[i])
             return None
 
     return -1
@@ -129,8 +130,47 @@ def print_out_list(list):
    for i in range(len(list)):
         print("\n" + str(list[i]))
 
+def filter_data(info_3, input_3):
+        # Sort data according to users input then print sorted data
+        # Changes only effect current session
+        match input_3:
+            case "1":
+                selection_sort(info_3, "Date", sort_inc)
+                print(info_3)
+
+            case "2":
+                selection_sort(info_3, "Cumulative", sort_inc)
+                print(info_3)
+
+
+            case "3":
+                selection_sort(info_3, "Cumulative", sort_dec)
+                print(info_3)
+
+            case "4":
+                inner_loop_3 = False
+                return None
+        
+            case other:
+                    print("Invalid Entry")
+
+def remove_fav(info, favs_list, user_list, input_4):
+        # Check if item is already in fav list, don't act if it does
+    if check_fav_list(favs_list, input_4) == -1:
+        print("Item is already in favorites")
+    else:
+
+        # Check if item exists, add if it does
+        if add_to_fav(info, input_4, favs_list) == -1:
+            print("Item DNE")
+        else:
+            print("Item has been added to favorites")
+        
+        # Save current sessions fav list to file
+        write_data(user_list, './text-files/users.txt')
+
 # Start main menu
-def main_menu(data, user_creds, all_users, loop, line_tracker):
+def main_menu(data, fav_list, all_users, loop, line_tracker):
     # Start main menu loop
     loop = True
 
@@ -237,7 +277,7 @@ Filter By:
                 inner_loop_3 = True
 
                 while inner_loop_3:
-                    print(
+                print(
 '''
 Sort By:
 1. Date
@@ -245,55 +285,22 @@ Sort By:
 3. Cumulative Value (Decreasing)
 4. Return to Main Menu
 '''
-                    )
+                )
 
-                    select_3 = input("Input number of desired option (1-4): ")
-
-                    # Sort data according to users input then print sorted data
-                    # Changes only effect current session
-                    match select_3:
-                        case "1":
-                            selection_sort(data, "Date", sort_inc)
-                            print(data)
-
-                        case "2":
-                            selection_sort(data, "Cumulative", sort_inc)
-                            print(data)
+        select_3 = input("Input number of desired option (1-4): ")
 
 
-                        case "3":
-                            selection_sort(data, "Cumulative", sort_dec)
-                            print(data)
-                
-                        case "4":
-                            inner_loop_3 = False
-                    
-                        case other:
-                            print("Invalid Entry")
+                filter_data(data)
 
             case "4":
                 select_4 = input("Input date of trade you wish to add to favorites (YYYY-MM-DD): ")
 
-                # Check if item is already in fav list, don't act if it does
-                if check_fav_list(user_creds, select_4) == -1:
-                    print("Item is already in favorites")
-                else:
+                remove_fav(data, fav_list, select_4)
 
-                    # Check if item exists, add if it does
-                    if add_to_fav(data, select_4, user_creds) == -1:
-                        print("Item DNE")
-                    else:
-                        print("Item has been added to favorites")
-                    
-                    # Save current sessions fav list to file
-                    write_data(all_users, './text-files/users.txt')
 
             case "5":
                 select_5 = input("Input date of trade you wish to remove from favorites (YYYY-MM-DD): ")
 
-                # Access current users fav list:
-                fav_list = user_creds['Favorites']
-                
                 # Search through users fav list 
                 # Returns item for that date or returns -1 if no trade was found
                 search_return_idx = search_data(fav_list, "Date", select_5)
@@ -301,14 +308,14 @@ Sort By:
                 if search_return_idx == -1:
                     print("Data was not found in favorites")
                 else:
-                    del user_creds['Favorites'][search_return_idx]
+                    del fav_list[search_return_idx]
                     print("Item has been removed from favorites")
                     
                 write_data(all_users, './text-files/users.txt')
 
             case "6":
-                for i in range(0, len(user_creds['Favorites'])):
-                    print("\n" + str(user_creds['Favorites'][i]))
+                for i in range(0, len(fav_list['Favorites'])):
+                    print("\n" + str(fav_list['Favorites'][i]))
 
             case "7":
                 loop = False
