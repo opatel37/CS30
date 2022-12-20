@@ -277,7 +277,7 @@ Filter By:
                 inner_loop_3 = True
 
                 while inner_loop_3:
-                print(
+                    print(
 '''
 Sort By:
 1. Date
@@ -285,12 +285,12 @@ Sort By:
 3. Cumulative Value (Decreasing)
 4. Return to Main Menu
 '''
-                )
+                    )
 
-        select_3 = input("Input number of desired option (1-4): ")
+                select_3 = input("Input number of desired option (1-4): ")
 
 
-                filter_data(data)
+                filter_data(data, select_3)
 
             case "4":
                 select_4 = input("Input date of trade you wish to add to favorites (YYYY-MM-DD): ")
