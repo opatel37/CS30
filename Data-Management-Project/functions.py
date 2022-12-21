@@ -124,44 +124,62 @@ def add_to_fav(list, date, favs):
             return None
 
     return -1
-
+ 
 # Print out items in a given list
 def print_out_list(list):
    for i in range(len(list)):
         print("\n" + str(list[i]))
 
-def filter_data(info_3, input_3):
+def filter_data(info_3):
         # Sort data according to users input then print sorted data
         # Changes only effect current session
-        match input_3:
-            case "1":
-                selection_sort(info_3, "Date", sort_inc)
-                print(info_3)
+            # Set inner loop 
+            inner_loop_3 = True
 
-            case "2":
-                selection_sort(info_3, "Cumulative", sort_inc)
-                print(info_3)
+            while inner_loop_3:
+                print(
+'''
+Sort By:
+1. Date
+2. Cumulative Value (Increasing)
+3. Cumulative Value (Decreasing)
+4. Return to Main Menu
+'''
+                )
+
+                select_3 = input("Input number of desired option (1-4): ")
+
+                match select_3:
+                    case "1":
+                        selection_sort(info_3, "Date", sort_inc)
+                        print(info_3)
+
+                    case "2":
+                        selection_sort(info_3, "Cumulative", sort_inc)
+                        print(info_3)
 
 
-            case "3":
-                selection_sort(info_3, "Cumulative", sort_dec)
-                print(info_3)
+                    case "3":
+                        selection_sort(info_3, "Cumulative", sort_dec)
+                        print(info_3)
 
-            case "4":
-                inner_loop_3 = False
-                return None
-        
-            case other:
-                    print("Invalid Entry")
+                    case "4":
+                        inner_loop_3 = False
+                        return None
+                
+                    case other:
+                            print("Invalid Entry")
 
-def remove_fav(info, favs_list, user_list, input_4):
+def add_fav(info, favs_list, user_list):
+    select_4 = input("Input date of trade you wish to add to favorites (YYYY-MM-DD): ")
+
         # Check if item is already in fav list, don't act if it does
-    if check_fav_list(favs_list, input_4) == -1:
+    if check_fav_list(favs_list, select_4) == -1:
         print("Item is already in favorites")
     else:
 
         # Check if item exists, add if it does
-        if add_to_fav(info, input_4, favs_list) == -1:
+        if add_to_fav(info, select_4, favs_list) == -1:
             print("Item DNE")
         else:
             print("Item has been added to favorites")
@@ -273,29 +291,10 @@ Filter By:
                         print("Invalid Entry")
             
             case "3":
-                # Set inner loop 
-                inner_loop_3 = True
-
-                while inner_loop_3:
-                    print(
-'''
-Sort By:
-1. Date
-2. Cumulative Value (Increasing)
-3. Cumulative Value (Decreasing)
-4. Return to Main Menu
-'''
-                    )
-
-                select_3 = input("Input number of desired option (1-4): ")
-
-
-                filter_data(data, select_3)
+                filter_data(data)
 
             case "4":
-                select_4 = input("Input date of trade you wish to add to favorites (YYYY-MM-DD): ")
-
-                remove_fav(data, fav_list, select_4)
+                add_fav(data, fav_list)
 
 
             case "5":
