@@ -290,6 +290,7 @@ DATE MANAGEMENT MAIN MENU
 
         match select:
             case "1":
+                # Set line tracker to manipulate the variable
                 line_tracker = print_data_management(data, line_tracker)
 
             case "2":
