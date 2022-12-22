@@ -130,7 +130,7 @@ def print_out_list(list):
    for i in range(len(list)):
         print("\n" + str(list[i]))
 
-def filter_data(info_3):
+def sort_data_manager(info_3):
         # Sort data according to users input then print sorted data
         # Changes only effect current session
             # Set inner loop 
@@ -187,6 +187,84 @@ def add_fav(info, favs_list, user_list):
         # Save current sessions fav list to file
         write_data(user_list, './text-files/users.txt')
 
+def print_data_management(list, line_tracker_archive):
+    # Track lines printed
+    line_num_1 = 0
+
+    print_10_lines(list, line_num_1)
+    
+    # Set inner loop
+    inner_loop_1 = True
+
+    while inner_loop_1:
+        print(
+'''
+1. Display the next 10 items
+2. Track back to last set of items displayed on previous visit
+3. Return to Main Menu
+'''
+        )
+
+        # Get input for inner loop
+        select_1 = input("Input number of desired option (1-3): ")
+
+        # Process input
+        if select_1 == "1":
+            # Add to line tracker
+            line_num_1 += 10
+
+            print_10_lines(list, line_num_1) 
+        
+        elif select_1 == "2":
+            # Set current line # to the one the user was at during last session
+            line_num_1 = line_tracker_archive
+
+            print_10_lines(list, line_num_1)
+
+        elif select_1 == "3":
+            line_tracker_archive = line_num_1
+            inner_loop_1 = False
+            return line_tracker_archive
+
+        else:
+            print("Invalid Entry")
+
+def filter_manager(list):
+    # Set inner loop 
+    inner_loop_2 = True
+
+    while inner_loop_2:
+        print(
+'''
+Filter By: 
+1. Day of the Week
+2. Date
+3. Return to Main Menu
+'''
+        )
+
+        select_2 = input("Input number of desired option (1-3): ")
+
+        if select_2 == "1":
+            day = input("Enter the day you would like to see data for: ")
+
+            filtered_search = filter_search(list, day, "Weekday")
+
+            print_out_list(filtered_search)
+
+        elif select_2 == "2":
+            date = input("Enter the date you would like to see data for (YYYY-MM-DD): ")
+
+            filtered_search = filter_search(list, date, "Date")
+
+            print_out_list(filtered_search)
+
+        elif select_2 == "3":
+            inner_loop_2 = False
+        
+        else: 
+            print("Invalid Entry")
+
 # Start main menu
 def main_menu(data, fav_list, all_users, loop, line_tracker):
     # Start main menu loop
@@ -212,86 +290,13 @@ DATE MANAGEMENT MAIN MENU
 
         match select:
             case "1":
-
-                # Track lines printed
-                line_num_1 = 0
-
-                for i in range(line_num_1, line_num_1 + 10):
-                    print("\n" + str(data[i]))
-                
-                # Set inner loop
-                inner_loop_1 = True
-
-                while inner_loop_1:
-                    print(
-'''
-1. Display the next 10 items
-2. Track back to last set of items displayed on previous visit
-3. Return to Main Menu
-'''
-                    )
-
-                    # Get input for inner loop
-                    select_1 = input("Input number of desired option (1-3): ")
-
-                    # Process input
-                    if select_1 == "1":
-                        # Add to line tracker
-                        line_num_1 += 10
-
-                        print_10_lines(data, line_num_1) 
-                    
-                    elif select_1 == "2":
-                        # Set current line # to the one the user was at during last session
-                        line_num_1 = line_tracker
-
-                        print_10_lines(data, line_num_1)
-
-                    elif select_1 == "3":
-                        line_tracker = line_num_1
-                        inner_loop_1 = False
-
-                    else:
-                        print("Invalid Entry")
+                line_tracker = print_data_management(data, line_tracker)
 
             case "2":
-                # Set inner loop 
-                inner_loop_2 = True
-
-                while inner_loop_2:
-                    print(
-'''
-Filter By: 
-1. Day of the Week
-2. Date
-3. Return to Main Menu
-'''
-                    )
-
-                    select_2 = input("Input number of desired option (1-3): ")
-
-                    if select_2 == "1":
-                        day = input("Enter the day you would like to see data for: ")
-
-                        filtered_search = filter_search(data, day, "Weekday")
-
-                        print_out_list(filtered_search)
-
-                    elif select_2 == "2":
-                        date = input("Enter the date you would like to see data for (YYYY-MM-DD): ")
-
-                        filtered_search = filter_search(data, date, "Date")
-
-                        print_out_list(filtered_search)
-
-                    elif select_2 == "3":
-                        inner_loop_2 = False
-                    
-                    else: 
-                        print("Invalid Entry")
+                filter_manager(data)
             
             case "3":
-                filter_data(data)
+                sort_data_manager(data)
 
             case "4":
                 add_fav(data, fav_list)
