@@ -13,17 +13,14 @@ def write_data(selected_data, save_to):
     json.dump(selected_data, file)
     file.close()
 
-# Used to sort data depending on which option user wants (Inc/Dec)
-def selection_sort(anArray, sort_param, compare_funct):
-    for fill_slot in range(len(anArray)):
-        min_pos = fill_slot
 
-        for post_fill in range(fill_slot +1, len(anArray)):
-            
-            if compare_funct(anArray[post_fill][sort_param], anArray[min_pos][sort_param]):
-                min_pos = post_fill
-
-        anArray[min_pos], anArray[fill_slot] = anArray[fill_slot], anArray[min_pos]
+# Check if item is in fav list or not
+def check_fav_list(list, item_in):
+    for i in range(len(list)):
+        if list[i]['Date'] == item_in:
+            return -1
+    else:
+        return None
 
 # Sort by increasing values
 def sort_inc(val_1, val_2):
@@ -43,6 +40,21 @@ def search_data(list, key, val):
 
     return -1
 
+# Verify inputed credentials against data base
+# Return True or False
+def find_user(list, username, password):
+    for i in range(0, len(list)):
+        if list[i]['Username'] == username and list[i]['Password'] == password:
+            return True
+
+    return False
+
+# Used in selection 1 of main menu func
+def print_10_lines(list, line_num):
+    for i in range(line_num, line_num + 10):
+        print("\n" + str(list[i]))
+
+
 # Verify credentials and login to correct user
 def login(user_list):
     print("Please login to access data...")
@@ -51,7 +63,7 @@ def login(user_list):
     login_password = input("Password: ")
 
     if find_user(user_list, login_username, login_password):
-        # login_username is not a dict
+        # If correct credentials are inputed return user's fav list
         for i in range(len(user_list)):
             if user_list[i]['Username'] == login_username:
                 return user_list[i]['Favorites']
@@ -65,9 +77,11 @@ def sign_up(user_list):
         sign_up_username = input("Username: ")
         sign_up_password = input("Password: ")
 
+        # Check if credentials have been used or not
         if find_user(user_list, sign_up_username, sign_up_password):
             print("Username/Password already in use")
         else:
+            # Allow account to be made if unique credentials are inputed
             user_list.append(create_new_acc(sign_up_username, sign_up_password))
             write_data(user_list, './text-files/users.txt')
 
@@ -81,28 +95,6 @@ def create_new_acc(username, password):
 
     return dict
 
-# Verify inputed credentials against data base
-# Return True or False
-def find_user(list, username, password):
-    for i in range(0, len(list)):
-        if list[i]['Username'] == username and list[i]['Password'] == password:
-            return True
-
-    return False
-
-# Check if item is in fav list or not
-def check_fav_list(list, item_in):
-    for i in range(len(list)):
-        if list[i]['Date'] == item_in:
-            return -1
-    else:
-        return None
-
-# Used in selection 1 of main menu func
-def print_10_lines(list, line_num):
-    for i in range(line_num, line_num + 10):
-        print("\n" + str(list[i]))
-
 # Search and output any items that fit chosen filter
 def filter_search(list, filter, key):
     temp_list = []
@@ -110,6 +102,7 @@ def filter_search(list, filter, key):
         if item[key] == filter.capitalize():
             temp_list.append(item)
     
+    # Check if any items were found and return
     if temp_list == []:
         print("No trades took place that day, please try again")
         return temp_list
@@ -129,6 +122,25 @@ def add_to_fav(list, date, favs):
 def print_list(list):
    for i in range(len(list)):
         print("\n" + str(list[i]))
+
+# Used to sort data depending on which option user wants
+# Changed selection sort to help sort by specific keys
+# Compare_funct determines if it's going to sort (Inc/Dec)
+def selection_sort(anArray, sort_param, compare_funct):
+    # Loop through arrayk stopping one before last element
+    for fill_slot in range(len(anArray)):
+        # Create and set a fill slot(what might be swapped with a differnet val)
+        min_pos = fill_slot
+        
+        # Loop through 
+        for post_fill in range(fill_slot +1, len(anArray)):
+
+            # Add a sort_param which represents the key/val pair you sort by
+            if compare_funct(anArray[post_fill][sort_param], anArray[min_pos][sort_param]):
+                min_pos = post_fill
+
+        # Swap values at min position and fill slot (will only make a difference if you have set min position to new value[post_fill][sort_param])
+        anArray[min_pos], anArray[fill_slot] = anArray[fill_slot], anArray[min_pos]
 
 def sort_data_manager(info_3):
         # Sort data according to users input then print sorted data
@@ -220,7 +232,9 @@ def print_data_management(list, line_tracker_archive):
             line_num_1 = line_tracker_archive
 
             print_10_lines(list, line_num_1)
-
+        
+        # Save current line - return line 
+        # End loop and function
         elif select_1 == "3":
             line_tracker_archive = line_num_1
             inner_loop_1 = False
@@ -244,7 +258,8 @@ Filter By:
         )
 
         select_2 = input("Input number of desired option (1-3): ")
-
+        
+        # Depending on user input use filter_search to print any items that fit the filter
         if select_2 == "1":
             day = input("Enter the day you would like to see data for: ")
 
