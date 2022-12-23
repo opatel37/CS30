@@ -277,7 +277,7 @@ Filter By:
         elif select_2 == "3":
             inner_loop_2 = False
         
-        else: 
+        else:
             print("Invalid Entry")
 
 def remove_fav_manager(list, save_file):
