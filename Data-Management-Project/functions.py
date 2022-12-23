@@ -4,9 +4,9 @@ import json
 
 def read_file(file_name):
     file = open(file_name, 'r')
-    info = json.load(file)
+    list = json.load(file)
     file.close()
-    return info
+    return list
 
 def write_data(selected_data, save_to):
     file = open(save_to, 'w')
@@ -91,9 +91,9 @@ def find_user(list, username, password):
     return False
 
 # Check if item is in fav list or not
-def check_fav_list(user, item_in):
-    for i in range(len(user)):
-        if user['Favorites'][i]['Date'] == item_in:
+def check_fav_list(list, item_in):
+    for i in range(len(list)):
+        if list[i]['Date'] == item_in:
             return -1
     else:
         return None
@@ -126,7 +126,7 @@ def add_to_fav(list, date, favs):
     return -1
  
 # Print out items in a given list
-def print_out_list(list):
+def print_list(list):
    for i in range(len(list)):
         print("\n" + str(list[i]))
 
@@ -170,7 +170,7 @@ Sort By:
                     case other:
                             print("Invalid Entry")
 
-def add_fav(info, favs_list, user_list):
+def add_fav_manager(list, favs_list, user_list):
     select_4 = input("Input date of trade you wish to add to favorites (YYYY-MM-DD): ")
 
         # Check if item is already in fav list, don't act if it does
@@ -179,7 +179,7 @@ def add_fav(info, favs_list, user_list):
     else:
 
         # Check if item exists, add if it does
-        if add_to_fav(info, select_4, favs_list) == -1:
+        if add_to_fav(list, select_4, favs_list) == -1:
             print("Item DNE")
         else:
             print("Item has been added to favorites")
@@ -250,14 +250,14 @@ Filter By:
 
             filtered_search = filter_search(list, day, "Weekday")
 
-            print_out_list(filtered_search)
+            print_list(filtered_search)
 
         elif select_2 == "2":
             date = input("Enter the date you would like to see data for (YYYY-MM-DD): ")
 
             filtered_search = filter_search(list, date, "Date")
 
-            print_out_list(filtered_search)
+            print_list(filtered_search)
 
         elif select_2 == "3":
             inner_loop_2 = False
@@ -265,6 +265,22 @@ Filter By:
         else: 
             print("Invalid Entry")
 
+def remove_fav_manager(list, save_file):
+    select_5 = input("Input date of trade you wish to remove from favorites (YYYY-MM-DD): ")
+  
+    # Search through users fav list 
+    # Returns item for that date or returns -1 if no trade was found
+    search_return_idx = search_data(list, "Date", select_5)
+    
+    if search_return_idx == -1:
+        print("Data was not found in favorites")
+    else:
+        del list[search_return_idx]
+        print("Item has been removed from favorites")
+        
+    write_data(save_file, './text-files/users.txt')
+
+          
 # Start main menu
 def main_menu(data, fav_list, all_users, loop, line_tracker):
     # Start main menu loop
@@ -279,9 +295,9 @@ DATE MANAGEMENT MAIN MENU
 1. Display First 10 Items in Data Set
 2. Search/Filter Data
 3. Sort Data
-4. Add to Favourites List
-5. Remove Data from Favourites List
-6. Display Favourites List
+4. Add to Favorites List
+5. Remove Data from Favorites List
+6. Display Favorites List
 7. Exit
         '''
             )
@@ -290,7 +306,7 @@ DATE MANAGEMENT MAIN MENU
 
         match select:
             case "1":
-                # Set line tracker to manipulate the variable
+                # Set line tracker to manipulate the global variable
                 line_tracker = print_data_management(data, line_tracker)
 
             case "2":
@@ -300,27 +316,13 @@ DATE MANAGEMENT MAIN MENU
                 sort_data_manager(data)
 
             case "4":
-                add_fav(data, fav_list)
-
+                add_fav_manager(data, fav_list, all_users)
 
             case "5":
-                select_5 = input("Input date of trade you wish to remove from favorites (YYYY-MM-DD): ")
-
-                # Search through users fav list 
-                # Returns item for that date or returns -1 if no trade was found
-                search_return_idx = search_data(fav_list, "Date", select_5)
-                
-                if search_return_idx == -1:
-                    print("Data was not found in favorites")
-                else:
-                    del fav_list[search_return_idx]
-                    print("Item has been removed from favorites")
-                    
-                write_data(all_users, './text-files/users.txt')
-
+                remove_fav_manager(fav_list, all_users)
+      
             case "6":
-                for i in range(0, len(fav_list['Favorites'])):
-                    print("\n" + str(fav_list['Favorites'][i]))
+                print_list(fav_list)
 
             case "7":
                 loop = False
