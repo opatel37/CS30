@@ -1,1 +1,1 @@
-[{"Username": "test1", "Password": "test1", "Favorites": []}, {"Username": "test2", "Password": "test2", "Favorites": []}]
+[{"Username": "test1", "Password": "test1", "Favorites": []}, {"Username": "test2", "Password": "test2", "Favorites": []}, {"Username": "test3", "Password": "test3", "Favorites": []}]
