@@ -23,4 +23,11 @@ class Character:
 
 # Task 2
 p1 = Character("Bob", "LOL", "HAHA")
-p1 = Character("Jim", "YAY", "CYA")
+p2 = Character("Jim", "YAY", "CYA")
+
+
+
+# Task 3
+print(p1.phrase1)
+p2.level = 2
+print(p1.phrase2)
