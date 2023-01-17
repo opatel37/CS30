@@ -35,11 +35,12 @@ class Snake(object):
         # Set current direction
         x, y = self.direction
         # Using grid size and screen width calc new pos of the head
-        # Add one to x, y coords... explain % part
-        new_pos = (((cur_pos[0] + (x*GRID_SIZE)) % SCREEN_WIDTH), (cur_pos[1] + (y*GRID_SIZE)) % SCREEN_HEIGHT)
+        # Add one block, size of one grid square, to x, y coords
+        new_pos = (((cur_pos[0] + (x*GRID_SIZE))), (cur_pos[1] + (y*GRID_SIZE)))
+
         # if new positions of snake head hits body reset game
-        # positions[2:] = any body part from of an idx of 2 or greater
-        # 0 = head so, idx of 2 or more is needed to make collision with body possible
+        # positions[2:] - any body part from of an idx of 2 or greater
+        # 0 - head so, idx of 2 or more is needed to make collision with body possible
         if len(self.positions) > 2 and new_pos in self.positions[2:]:
             self.reset()
         else:
@@ -60,7 +61,7 @@ class Snake(object):
         for block in self.positions:
             sq = pygame.Rect((block[0], block[1]), (GRID_SIZE, GRID_SIZE))
             pygame.draw.rect(surface, self.color, sq) # Body parts
-            pygame.draw.rect(surface, (89, 89, 83), sq, 1) # Outline?
+            pygame.draw.rect(surface, (89, 89, 83), sq, 1)
 
     def handle_keys(self):
         # If player hits quit - x at top right corner
@@ -108,15 +109,15 @@ def draw_grid(surface):
 
 # Global Variable(s)
 # Screen specs
-SCREEN_WIDTH = 500
-SCREEN_HEIGHT = 500
+SCREEN_WIDTH = 600
+SCREEN_HEIGHT = 600
 
 # Grid specs
 GRID_SIZE = 20
 GRID_WIDTH = SCREEN_HEIGHT / GRID_SIZE
 GRID_HEIGHT = SCREEN_WIDTH / GRID_SIZE
 
-# Movement controls
+# Movement controls - (x, y)
 UP = (0, -1)
 DOWN = (0, 1)
 LEFT = (-1, 0)
@@ -148,7 +149,7 @@ def main():
         snake.handle_keys() # handle key inputs
         draw_grid(surface)
         snake.move()
-        # Update game if snake ate food, head pos = food pos
+        # Update game if snake ate food, head pos = food pos - functionize
         if snake.get_head_pos() == food.position:
             snake.length += 1
             score += 1
@@ -156,14 +157,10 @@ def main():
 
         snake.draw(surface)
         food.draw(surface)
-        # blit - draw surface onto screen (surface, (x, y)) - top left corner
-        # surface - the pannel inside the screen in which you draw objects
-        # screen - the 'canvas' that you update and draw the surface onto
+        # EXPLAIN
         screen.blit(surface, (0, 0))
-        
-        # Display score - write in magenta
+        # # Display score
         # text = myfont.render("Score {0}".format(score), 1, (0, 255, 0))
-        # text = pygame.font.SysFont("Arial", 36)
         # screen.blit(text, (5, 10))
         pygame.display.update()
 
