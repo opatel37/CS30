@@ -156,10 +156,14 @@ def main():
 
         snake.draw(surface)
         food.draw(surface)
-        # EXPLAIN
+        # blit - draw surface onto screen (surface, (x, y)) - top left corner
+        # surface - the pannel inside the screen in which you draw objects
+        # screen - the 'canvas' that you update and draw the surface onto
         screen.blit(surface, (0, 0))
-        # # Display score
+        
+        # Display score - write in magenta
         # text = myfont.render("Score {0}".format(score), 1, (0, 255, 0))
+        # text = pygame.font.SysFont("Arial", 36)
         # screen.blit(text, (5, 10))
         pygame.display.update()
 
