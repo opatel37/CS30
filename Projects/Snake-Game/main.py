@@ -2,9 +2,9 @@ import pygame
 import random
 import sys
 
-
-class Snake(object):
-    def __init__(self):
+# Parent class to make and control snakes
+class Snake():
+    def __init__(self, rgb_color):
         # Set start length
         self.length = 1
         # Set start position in the middle of the map
@@ -14,7 +14,7 @@ class Snake(object):
         # Set a random start position
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
         # Set color of snake
-        self.color = (0, 150, 255)
+        self.color = rgb_color
 
     def get_head_pos(self):
         # Get position of the head of the snake, item at idx 0 from list positions property 
@@ -38,19 +38,37 @@ class Snake(object):
         # Add one block, size of one grid square, to x, y coords
         new_pos = (((cur_pos[0] + (x*GRID_SIZE))), (cur_pos[1] + (y*GRID_SIZE)))
 
+        return new_pos
+
+    # Check for collisions between head and body segments
+    def body_collision(self, new_position):
         # if new positions of snake head hits body reset game
         # positions[2:] - any body part from of an idx of 2 or greater
         # 0 - head so, idx of 2 or more is needed to make collision with body possible
-        if len(self.positions) > 2 and new_pos in self.positions[2:]:
+        if len(self.positions) > 2 and new_position in self.positions[2:]:
             self.reset()
         else:
+            # Indicate no collision detected
+            return True
+
+    # Check for collisions between head and borders
+    def border_collision(self, new_position):
+        if new_position[0] < 0 or new_position[1] < 0 or new_position[0] > SCREEN_WIDTH or new_position[1] > SCREEN_HEIGHT:
+            self.reset()
+        else:
+            # Indicate no collision detected
+            return True
+
+    # If no collisions were detected, update snake positions
+    def collision_mangager(self, new_position):
+        if self.body_collision(new_position) and self.border_collision(new_position):
             # Add new position of head into positions list
-            self.positions.insert(0, new_pos)
-            # Remove lass element, the last bit of the tail - it's moving forward
+            self.positions.insert(0, new_position)
+            # Remove last element, the last bit of the tail - it's moving forward
             if len(self.positions) > self.length:
                 self.positions.pop()
 
-    # Reset to init vars - functionize later
+    # Reset to init vars
     def reset(self):
         self.length = 1
         self.positions = [((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2))]
@@ -63,6 +81,8 @@ class Snake(object):
             pygame.draw.rect(surface, self.color, sq) # Body parts
             pygame.draw.rect(surface, (89, 89, 83), sq, 1)
 
+# Child class to control player 1's snake
+class Player1(Snake):
     def handle_keys(self):
         # If player hits quit - x at top right corner
         for event in pygame.event.get():
@@ -80,10 +100,29 @@ class Snake(object):
                 elif event.key == pygame.K_RIGHT:
                     self.turn(RIGHT)
 
-class Food(object):
+# Child class to control player 2's snake
+class Player2(Snake):
+    def handle_keys(self):
+        # If player hits quit - x at top right corner
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit() 
+                sys.exit() # Running program
+            # Check for key down event, move snake accordingly
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_w:
+                    self.turn(UP)
+                elif event.key == pygame.K_s:
+                    self.turn(DOWN)
+                elif event.key == pygame.K_a:
+                    self.turn(LEFT)
+                elif event.key == pygame.K_d:
+                    self.turn(RIGHT)
+
+class Food():
     def __init__(self):
         self.posiion = (0, 0) # x, y position
-        self.color = (255, 0, 0)
+        self.color = (0, 255, 0)
         self.randomize_pos()
 
     def randomize_pos(self):
@@ -94,23 +133,23 @@ class Food(object):
         pygame.draw.rect(surface, self.color, block)
         pygame.draw.rect(surface, (89, 89, 83), block, 1)
 
+# Function(s)
 def draw_grid(surface):
     # Loop through grid, rows - x, collumns - y
     for y in range(0, int(GRID_HEIGHT)):
         for x in range(0, int(GRID_WIDTH)):
             # Draw black or white squares depending on the position of square on the grid
             if (x + y) % 2 == 0:
-                white_sq = pygame.Rect(x*GRID_SIZE, y*GRID_SIZE, GRID_SIZE, GRID_SIZE)
-                pygame.draw.rect(surface, (255, 255, 255), white_sq)
+                odd_sq = pygame.Rect(x*GRID_SIZE, y*GRID_SIZE, GRID_SIZE, GRID_SIZE)
+                pygame.draw.rect(surface, (211, 211, 211), odd_sq)
             else:
-                black_sq = pygame.Rect(x*GRID_SIZE, y*GRID_SIZE, GRID_SIZE, GRID_SIZE)
-                pygame.draw.rect(surface, (0, 0, 0), black_sq)
-
+                even_sq = pygame.Rect(x*GRID_SIZE, y*GRID_SIZE, GRID_SIZE, GRID_SIZE)
+                pygame.draw.rect(surface, (105, 105, 105), even_sq)
 
 # Global Variable(s)
 # Screen specs
-SCREEN_WIDTH = 600
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 400
+SCREEN_HEIGHT = 400
 
 # Grid specs
 GRID_SIZE = 20
@@ -122,7 +161,6 @@ UP = (0, -1)
 DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
-
 
 
 def main():
@@ -139,29 +177,38 @@ def main():
     surface = surface.convert()
     draw_grid(surface)
 
-    snake = Snake()
-    food = Food()
+    # Initialize snakes for each player
+    player_1 = Player1((0, 150, 255)) # Blue snake
+    player_2 = Player2((255, 22, 12)) # Red snake
+    food = Food() # Green food
 
-    # Initialize score
-    score = 0
+    # Execute actions to change game characteristics
     while (True):
         clock.tick(10) # tick at 10 fps
-        snake.handle_keys() # handle key inputs
+        player_1.handle_keys() # handle key inputs
+        player_2.handle_keys() # handle key inputs
         draw_grid(surface)
-        snake.move()
-        # Update game if snake ate food, head pos = food pos - functionize
-        if snake.get_head_pos() == food.position:
-            snake.length += 1
-            score += 1
+
+        # Check for collisions after moving, updates positions if none detected
+        player_1.collision_mangager(player_1.move())
+        player_2.collision_mangager(player_2.move())
+
+        # Update game if snake ate food, head pos = food pos
+        if player_1.get_head_pos() == food.position:
+            player_1.length += 1
             food.randomize_pos()
 
-        snake.draw(surface)
+        if player_2.get_head_pos() == food.position:
+            player_2.length += 1
+            food.randomize_pos()
+
+        player_1.draw(surface)
+        player_2.draw(surface)
         food.draw(surface)
         # EXPLAIN
         screen.blit(surface, (0, 0))
-        # # Display score
-        # text = myfont.render("Score {0}".format(score), 1, (0, 255, 0))
-        # screen.blit(text, (5, 10))
+
+        # Update to display changes
         pygame.display.update()
 
 main()
