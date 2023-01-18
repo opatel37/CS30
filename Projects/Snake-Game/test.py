@@ -105,21 +105,34 @@ class Player1(Snake):
 
 # Child class to control player 2's snake
 class Player2(Snake):
-    def handle_keys(self):
-        # If player hits quit - x at top right corner
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.quit()
-            # Check for key down event, move snake accordingly
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_w:
-                    self.turn(UP)
-                elif event.key == pygame.K_s:
-                    self.turn(DOWN)
-                elif event.key == pygame.K_a:
-                    self.turn(LEFT)
-                elif event.key == pygame.K_d:
-                    self.turn(RIGHT)
+    pass
+    # def handle_keys(self):
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.KEYDOWN:
+    #             if event.key == pygame.K_UP:
+    #                 self.turn(UP)
+    #                 pygame.event.post(event)
+    #         # Check for all your other relevant keys...
+
+    #             elif event.key == pygame.K_w: # Or any key you need elsewhere
+    #                 self.turn(DOWN)
+    #                 pygame.event.post(event) # Put it back on the queue
+
+    # def handle_keys(self):
+    #     # If player hits quit - x at top right corner
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.QUIT:
+    #             self.quit()
+    #         # Check for key down event, move snake accordingly
+    #         elif event.type == pygame.KEYDOWN:
+    #             if event.key == pygame.K_w:
+    #                 self.turn(UP)
+    #             elif event.key == pygame.K_s:
+    #                 self.turn(DOWN)
+    #             elif event.key == pygame.K_a:
+    #                 self.turn(LEFT)
+    #             elif event.key == pygame.K_d:
+    #                 self.turn(RIGHT)
 
 class Food():
     def __init__(self):
@@ -147,6 +160,20 @@ def draw_grid(surface):
             else:
                 even_sq = pygame.Rect(x*GRID_SIZE, y*GRID_SIZE, GRID_SIZE, GRID_SIZE)
                 pygame.draw.rect(surface, (105, 105, 105), even_sq)
+
+def handle_key(snake1, snake2):
+    for event in pygame.event.get():
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit() # stop running program
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    snake1.turn(UP)
+        # Check for all your other relevant keys...
+
+                elif event.key == pygame.K_w: # Or any key you need elsewhere
+                    snake2.turn(UP)
 
 # Global Variable(s)
 # Screen specs
@@ -188,7 +215,8 @@ def main():
     while (True):
         clock.tick(10) # tick at 10 fps
         # player_1.handle_keys() # handle key inputs
-        player_2.handle_keys() # handle key inputs
+        # player_2.handle_keys() # handle key inputs
+        handle_key(player_1, player_2)
         draw_grid(surface)
 
         # Check for collisions after moving, updates positions if none detected
@@ -207,7 +235,8 @@ def main():
         player_1.draw(surface)
         player_2.draw(surface)
         food.draw(surface)
-        # EXPLAIN
+
+        # Draw surface onto screen
         screen.blit(surface, (0, 0))
 
         # Update to display changes
