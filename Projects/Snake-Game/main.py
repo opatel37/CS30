@@ -187,8 +187,8 @@ def main():
     # Execute actions to change game characteristics
     while (True):
         clock.tick(10) # tick at 10 fps
-        # player_1.handle_keys() # handle key inputs
-        player_2.handle_keys() # handle key inputs
+        player_1.handle_keys() # handle key inputs
+        # player_2.handle_keys() # handle key inputs
         draw_grid(surface)
 
         # Check for collisions after moving, updates positions if none detected
@@ -207,7 +207,8 @@ def main():
         player_1.draw(surface)
         player_2.draw(surface)
         food.draw(surface)
-        # EXPLAIN
+
+        # Draw surface onto screen
         screen.blit(surface, (0, 0))
 
         # Update to display changes
